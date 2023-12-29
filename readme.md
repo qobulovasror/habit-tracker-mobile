@@ -24,11 +24,11 @@ Follow these steps to install the program:
    npx expo start
    ```
 
-## Contribution
+Contribution
 If you have suggestions or work to improve the application, open a Pull Request.
 
-## The author
-The program was created by Qobulov Asror.
+The author
+The program was created by [Qobulov Asror](https://github.com/qobulovasror)
 
-## License
-MIT © [Qobulov Asror](https://github.com/qobulovasror)
+License
+[MIT](https://github.com/qobulovasror/habit-tracker-mobile/blob/main/LICENSE)

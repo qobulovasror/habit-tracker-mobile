@@ -9,15 +9,19 @@ import {
 import mainStyle from "../../assets/styles/mainStyle";
 import { StatusBar } from "expo-status-bar";
 import { addStyle } from "../../assets/styles/addStyle";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { Switch } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import {colors, randomColor} from '../../assets/config/colors'
+import { addHabit } from "../../services/habitDB";
 
-const Add = () => {
+const Add = ({fetchHabits}) => {
   const [habit, setHabit] = useState({
     name: "",
-    frequency: 1,
+    frequency: 7,
+    amount: 1,
+    amountType: "",
+    change: 0,
     reminder: {
       time: new Date(),
       active: false,
@@ -28,11 +32,23 @@ const Add = () => {
 
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [amountDetalisShow, setAmountDetalisShow] = useState(false);
  
   const setFreq = (val) =>{
     if(val>-1 && val<8)
       setHabit({...habit, frequency: val})
   }
+
+  const setAmount = (val) =>{
+    if(val>0)
+    setHabit({...habit, amount: val})
+  }
+
+  const setChange = (val) =>{
+    if(val>-1)
+    setHabit({...habit, change: val})
+  }
+
   const changeTime = (event, selectedDate) => {
     setShowTimePicker(false);
     setHabit({...habit, reminder: {...habit.reminder, time: selectedDate} })// selectedDate);
@@ -40,7 +56,27 @@ const Add = () => {
 
   const changetColor = (color) => {
     setHabit({ ...habit, color: color});
-    console.log(color);
+  }
+
+  const submitHabit = () =>{
+    //add habit to database here
+    
+    // chack datas
+    if(!habit.name) return alert("Name is required");
+    addHabit(
+      habit.name,
+      habit.frequency,
+      habit.amount,
+      habit.amountType,
+      habit.change,
+      habit.reminder.active,
+      habit.reminder.time,
+      habit.description,
+      habit.color
+    )
+
+    fetchHabits()
+
   }
 
   return (
@@ -51,7 +87,7 @@ const Add = () => {
         style="light"
       />
       <View style={{ paddingHorizontal: 10 }}>
-        <Text style={mainStyle.header}>Add new habit</Text>
+        <Text style={[mainStyle.header, {marginBottom: 10}]}>Add new habit</Text>
         {/* name */}
         <View style={addStyle.catGroup}>
           <Text style={addStyle.inputTitle}>Habit name: </Text>
@@ -59,6 +95,8 @@ const Add = () => {
             style={addStyle.input}
             value={habit.name}
             onChangeText={(val) => setHabit({ ...habit, name: val })}
+            placeholder="Read book"
+            placeholderTextColor="#999"
           />
         </View>
         {/* frequency */}
@@ -81,6 +119,64 @@ const Add = () => {
               <AntDesign name="plus" size={24} color="#fff" />
             </TouchableOpacity>
           </View>
+        </View>
+        {/* amount */}
+        <View style={[addStyle.catGroup, {flexDirection: 'column'}]}>
+          <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={addStyle.inputTitle}>Amount: </Text>
+            <View style={mainStyle.row}>
+              <Text style={{ color: "#aaa", fontSize: 16, marginTop: 10 }}>
+                Daily size
+              </Text>
+              <TouchableOpacity style={[addStyle.btn, {}]} onPress={()=>setAmount(habit.amount-1)}>
+                <AntDesign name="minus" size={24} color="#fff" />
+              </TouchableOpacity>
+              <TextInput
+                style={[addStyle.input, { width: 50, textAlign: 'center' }]}
+                keyboardType="numeric"
+                value={habit.amount.toString()}
+                onChangeText={val=>setAmount(val)}
+              />
+              <TouchableOpacity style={[addStyle.btn, {}]} onPress={()=>setAmount(habit.amount+1)}>
+                <AntDesign name="plus" size={24} color="#fff" />
+              </TouchableOpacity>
+              
+              <TouchableOpacity style={[addStyle.btn, {padding: 8, backgroundColor: '#52525EFF', transform: [{ rotate: amountDetalisShow?'180deg': "0deg"}]}]} onPress={()=>setAmountDetalisShow(!amountDetalisShow)}>
+                <MaterialIcons name="expand-more" size={25} color="#fff" />
+              </TouchableOpacity>
+            </View>
+          </View>
+          {
+            amountDetalisShow &&
+            <View style={[mainStyle.column, {marginTop: 10}]}>
+                <View style={[mainStyle.row, mainStyle.between, {marginBottom: 7}]}>
+                  <Text style={addStyle.inputTitle}>Size type: </Text>
+                  <TextInput 
+                    style={[addStyle.input, {width: '60%'}]} 
+                    value={habit.amountType}
+                    onChangeText={(val)=>setHabit({...habit, amountType: val})}
+                    placeholder={`${habit.amount} (page) per day`} 
+                    placeholderTextColor="#999"/>
+                </View>
+                <View style={[mainStyle.row, mainStyle.between]}>
+                  <Text style={addStyle.inputTitle}>Daily change: </Text>
+                  <View style={[mainStyle.row]}>
+                    <TouchableOpacity style={[addStyle.btn, {}]} onPress={()=>setChange(habit.change-1)}>
+                      <Ionicons name="trending-down" size={24} color="#fff" />
+                    </TouchableOpacity>
+                    <TextInput
+                      style={[addStyle.input, { width: 50, textAlign: 'center' }]}
+                      keyboardType="numeric"
+                      value={habit.change.toString()}
+                      onChangeText={val=>setChange(val)}
+                    />
+                    <TouchableOpacity style={[addStyle.btn, {}]} onPress={()=>setChange(habit.change+1)}>
+                      <Ionicons name="trending-up" size={24} color="#fff" />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+            </View>
+          }
         </View>
         {/* remender */}
         <View style={addStyle.catGroup}>
@@ -117,6 +213,8 @@ const Add = () => {
             multiline={true}
             value={habit.description}
             onChangeText={val=>setHabit({...habit, description: val})}
+            placeholder="The habit of reading books"
+            placeholderTextColor="#999"
           />
         </View>
         {/* color */}
@@ -136,7 +234,7 @@ const Add = () => {
             <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: colors[7], borderWidth: (habit.color==colors[7])? 2: 0}]} onPress={()=>changetColor(colors[7])}></TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity style={{backgroundColor: "#00f", width: '100%', marginVertical: 10, borderRadius: 10, padding: 15}}>
+        <TouchableOpacity onPress={submitHabit} style={{backgroundColor: "#00f", width: '100%', marginVertical: 5, borderRadius: 10, padding: 15}}>
           <Text style={{color: "#fff", textAlign: 'center', fontSize: 22}}>Saqlash</Text>
         </TouchableOpacity>
       </View>

@@ -14,7 +14,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 
 export default function Home({}) {
-
   return (
     <SafeAreaView style={mainStyle.container}>
       <StatusBar
@@ -41,7 +40,7 @@ export default function Home({}) {
 
 const Item = ({item}) => {
   return (
-    <View style={homeStyle.listItem}>
+    <TouchableOpacity style={homeStyle.listItem}>
       <View style={[mainStyle.between, mainStyle.row]}>
         <Text style={homeStyle.itemTitle}>{(item.title.length>20)? item.title.slice(0, 20)+"...": item.title}</Text>
         <View style={mainStyle.row}>
@@ -67,7 +66,7 @@ const Item = ({item}) => {
           ))
         }
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

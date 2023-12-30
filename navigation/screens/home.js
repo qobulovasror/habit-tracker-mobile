@@ -13,7 +13,7 @@ import mainStyle from "../../assets/styles/mainStyle";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 
-export default function Home({}) {
+export default function Home({navigation}) {
   return (
     <SafeAreaView style={mainStyle.container}>
       <StatusBar
@@ -30,7 +30,7 @@ export default function Home({}) {
       <FlatList
         data={DATA}
         style={{ padding: 5 }}
-        renderItem={({ item }) => <Item item={item} />}
+        renderItem={({ item }) => <Item item={item} navigation={navigation}/>}
         keyExtractor={(item) => item.id}
       />
 
@@ -38,9 +38,9 @@ export default function Home({}) {
   );
 }
 
-const Item = ({item}) => {
+const Item = ({item, navigation}) => {
   return (
-    <TouchableOpacity style={homeStyle.listItem}>
+    <TouchableOpacity style={homeStyle.listItem} onPress={() => navigation.navigate('Profile')}>
       <View style={[mainStyle.between, mainStyle.row]}>
         <Text style={homeStyle.itemTitle}>{(item.title.length>20)? item.title.slice(0, 20)+"...": item.title}</Text>
         <View style={mainStyle.row}>

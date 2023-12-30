@@ -40,7 +40,7 @@ export default function Home({navigation}) {
 
 const Item = ({item, navigation}) => {
   return (
-    <TouchableOpacity style={homeStyle.listItem} onPress={() => navigation.navigate('Profile')}>
+    <TouchableOpacity style={homeStyle.listItem} onPress={() => navigation.navigate('viewHabit')}>
       <View style={[mainStyle.between, mainStyle.row]}>
         <Text style={homeStyle.itemTitle}>{(item.title.length>20)? item.title.slice(0, 20)+"...": item.title}</Text>
         <View style={mainStyle.row}>

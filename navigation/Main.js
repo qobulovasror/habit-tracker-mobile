@@ -8,6 +8,7 @@ import { getHabit } from "../services/habitDB";
 import Home from "./screens/home";
 import Add from "./screens/add";
 import ViewHabit from "./stackScreen/viewHabit";
+import CheckHabit from "./screens/checkHabit";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,8 +36,9 @@ export default function Main() {
     <Stack.Navigator
       initialRouteName="main"
       screenOptions={{
-        headerTintColor: "white",
-        headerStyle: { backgroundColor: "tomato", height: 0 },
+        headerTintColor: "#000",
+        headerStyle: { height: 0 },
+        headerShown: false
       }}
     >
       <Stack.Screen
@@ -55,9 +57,9 @@ export default function Main() {
         )}
       </Stack.Screen>
       <Stack.Screen
-        name="Profile"
+        name="viewHabit"
         options={{
-          title: 'My profile',
+          title: '',
         }}
       >
         {
@@ -76,7 +78,6 @@ const TabNavigationHadler = (props) => {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        headerMode: "screen",
         headerTintColor: "#27272EFF",
         headerStyle: { backgroundColor: "#272730FF", height: 10 },
         tabBarActiveTintColor: "#e91e63",
@@ -98,14 +99,17 @@ const TabNavigationHadler = (props) => {
       </Tab.Screen>
       <Tab.Screen
         name="Today"
-        component={Home}
         options={{
-          tabBarLabel: "", //'Calendar',
+          tabBarLabel: "", //"Today's habit",
           tabBarIcon: ({ color, size }) => (
             <Octicons name="checklist" size={size + 2} color={color} />
           ),
         }}
-      />
+      >
+        {(props) => (
+          <CheckHabit {...props} habits={habits} fetchHabits={fetchHabits} />
+        )}
+      </Tab.Screen>
       <Tab.Screen
         name="Add habit"
         options={{

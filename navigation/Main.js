@@ -9,6 +9,7 @@ import Home from "./screens/home";
 import Add from "./screens/add";
 import ViewHabit from "./stackScreen/viewHabit";
 import CheckHabit from "./screens/checkHabit";
+import Setting from "./screens/setting";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -141,7 +142,7 @@ const TabNavigationHadler = (props) => {
       />
       <Tab.Screen
         name="Settings"
-        component={Home}
+        component={Setting}
         options={{
           tabBarLabel: "", //'Settings',
           tabBarIcon: ({ color, size }) => (

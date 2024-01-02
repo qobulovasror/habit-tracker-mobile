@@ -16,10 +16,23 @@ const Tab = createBottomTabNavigator();
 
 export default function Main() {
   const [habits, setHabits] = useState("");
+  const [selectHabit, setSelectHabit] = useState({
+    amount: 2,
+    amountType: "sdfsdf",
+    change: 1,
+    color: "08A34FFF",
+    createdAt: "2024-01-02 11:12:01",
+    description: "sdfsdf",
+    frequency: 7,
+    id: 1,
+    name: "ghgsfdf",
+    reminderActive: 0,
+    reminderTime: "",
+  });
   const fetchHabits = async () => {
     try {
       getHabit().then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data) {
           setHabits(data);
         }
@@ -36,15 +49,15 @@ export default function Main() {
     <Stack.Navigator
       initialRouteName="main"
       screenOptions={{
-        headerTintColor: "#000",
+        headerTintColor: "#fff",
         headerStyle: { height: 0 },
-        headerShown: false
+        headerShown: false,
       }}
     >
       <Stack.Screen
         name="main"
         options={{
-          title: "Awesome app",
+          title: "",
         }}
       >
         {(props) => (
@@ -59,14 +72,18 @@ export default function Main() {
       <Stack.Screen
         name="viewHabit"
         options={{
-          title: '',
+          title: "",
+          cardStyle: { paddingTop: 60, backgroundColor: "#272730FF" },
         }}
       >
-        {
-          (props)=>(
-            <ViewHabit {...props}/>
-          )
-        }
+        {(props) => (
+          <ViewHabit
+            {...props}
+            selectHabit={selectHabit}
+            setSelectHabit={setSelectHabit}
+            fetchHabits={fetchHabits}
+          />
+        )}
       </Stack.Screen>
     </Stack.Navigator>
   );
@@ -76,18 +93,18 @@ const TabNavigationHadler = (props) => {
   const { habits, setHabits, fetchHabits } = props;
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Habits"
       screenOptions={{
-        headerTintColor: "#27272EFF",
-        headerStyle: { backgroundColor: "#272730FF", height: 10 },
-        tabBarActiveTintColor: "#e91e63",
+        headerTintColor: "#fff",
+        headerTitleStyle: { fontSize: 28 },
+        headerStyle: { backgroundColor: "#272730FF" },
         tabBarStyle: { backgroundColor: "#272730FF" },
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="Habits"
         options={{
-          tabBarLabel: "", //'Home',
+          tabBarLabel: "",
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="home" color={color} size={size + 2} />
           ),
@@ -98,7 +115,7 @@ const TabNavigationHadler = (props) => {
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="Today"
+        name="Today's habits"
         options={{
           tabBarLabel: "", //"Today's habit",
           tabBarIcon: ({ color, size }) => (
@@ -111,7 +128,7 @@ const TabNavigationHadler = (props) => {
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="Add habit"
+        name="Add new habit"
         options={{
           tabBarLabel: "", //'Add',
           tabBarIcon: ({ color, size }) => (

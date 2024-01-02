@@ -4,7 +4,6 @@ const mainStyle = StyleSheet.create({
     container: {
         width: '100%',
         height: "100%",
-        marginTop: 35,
         backgroundColor: "#272730"
     },
     header: {

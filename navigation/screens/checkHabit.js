@@ -8,7 +8,7 @@ const CheckHabit = ({ navigation }) => {
   return (
     <SafeAreaView style={mainStyle.container}>
       <StatusBar backgroundColor="#272730" barStyle={"light-content"} />
-      <Text style={mainStyle.header}>Today's habits</Text>
+      {/* <Text style={mainStyle.header}>Today's habits</Text> */}
       <FlatList
         data={DATA}
         style={{ padding: 5 }}

@@ -53,6 +53,7 @@ const getHabit = () => {
         tx.executeSql("SELECT * FROM habit",[],
           (tx, results) => {
             if (results.rows.length != 0) {
+              console.log(results.rows._array);
               resolve(results.rows._array);
             } else {
               resolve([]);
@@ -71,6 +72,7 @@ const getHabit = () => {
   });
 };
 
+
 const updateHabit = (id, name, frequency, reminderActive, reminderTime, description, color) => {
     try {
       db.transaction((tx) => {
@@ -84,9 +86,39 @@ const updateHabit = (id, name, frequency, reminderActive, reminderTime, descript
     }
   };
 
+// const deleteHabit = (id) => {
+//   try {
+//     db.transaction((tx) => {
+//       tx.executeSql("DELETE FROM habit WHERE id=?", [id]);
+//     }, (error)=>console.log(error), ()=>console.log("success"));
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 const deleteHabit = (id) => {
-  db.transaction((tx) => {
-    tx.executeSql("DELETE FROM habit WHERE id=?", [id]);
+  return new Promise((resolve, reject) => {
+    try {
+      db.transaction((tx) => {
+        tx.executeSql("DELETE FROM habit WHERE id=?;",[Number(id)],
+          (tx, results) => {
+            if (results.rows.length != 0) {
+              console.log(results.rows.length);
+              resolve(results.rows._array);
+            } else {
+              resolve([]);
+            }
+          },
+          (error) => {
+            console.log("err from DB file1:", error);
+            reject(error);
+          }
+          );
+        });
+      } catch (error) {
+        console.log('err from DB file:', error);
+        reject(error);
+    }
   });
 };
 

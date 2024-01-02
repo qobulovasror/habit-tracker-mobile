@@ -25,7 +25,7 @@ const Setting = () => {
                 barStyle={"light-content"}
                 style="light"
             />
-            <Text style={[mainStyle.header, {margin: 10}]}>Settings</Text>
+            {/* <Text style={[mainStyle.header, {margin: 10}]}>Settings</Text> */}
             <ScrollView style={{ paddingHorizontal: 10, marginTop: 10, marginBottom: 50 }}>
                     {/* lang */}
                     <View style={[settingStyle.catGroup, {flexDirection: 'column'}]}>

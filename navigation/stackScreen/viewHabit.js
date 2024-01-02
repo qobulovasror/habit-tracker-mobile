@@ -19,27 +19,32 @@ import {
 import { Switch } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { colors, randomColor } from "../../assets/config/colors";
-import { addHabit } from "../../services/habitDB";
+import { updateHabit, deleteHabit } from "../../services/habitDB";
 
-const ViewHabit = ({ navigation, fetchHabits }) => {
+const ViewHabit = (props) => {
+  const {navigation, fetchHabits, selectHabit, setSelectHabit} = props
+  if(!selectHabit) {
+    navigation.navigate('main')
+    setSelectHabit()
+  }
+
   const [habit, setHabit] = useState({
-    name: "",
-    frequency: 7,
-    amount: 1,
-    amountType: "",
-    change: 0,
+    name: selectHabit.name,
+    frequency: selectHabit.frequency,
+    amount: selectHabit.amount,
+    amountType: selectHabit.amountType,
+    change: selectHabit.change,
     reminder: {
-      time: new Date(),
-      active: false,
+      time: (selectHabit.reminderTime)? new Date(selectHabit.reminderTime): new Date(),
+      active: (selectHabit.reminderActive==1)? true: false,
     },
-    description: "",
-    color: randomColor(),
+    description: selectHabit.description,
+    color: selectHabit.color,
   });
 
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [amountDetalisShow, setAmountDetalisShow] = useState(false);
-  const [edit, setEdit] = useState(false);
 
   const setFreq = (val) => {
     if (val > -1 && val < 8) setHabit({ ...habit, frequency: val });
@@ -63,27 +68,34 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
   };
 
   const submitHabit = () => {
-    //add habit to database here
-
-    // chack datas
     if (!habit.name) return alert("Name is required");
-    addHabit(
-      habit.name,
-      habit.frequency,
-      habit.amount,
-      habit.amountType,
-      habit.change,
-      habit.reminder.active,
-      habit.reminder.time,
-      habit.description,
-      habit.color
-    );
-
+    // addHabit(
+    //   habit.name,
+    //   habit.frequency,
+    //   habit.amount,
+    //   habit.amountType,
+    //   habit.change,
+    //   (habit.reminder.active)? 1: 0,
+    //   habit.reminder.time,
+    //   habit.description,
+    //   habit.color
+    // )
     fetchHabits();
   };
 
+  const deleteHabitHandler = () => {
+    deleteHabit(selectHabit.id).then(data=>{
+      console.log(data);
+    })
+    goBack()
+  }
+  const goBack = () => {
+    fetchHabits()
+    setSelectHabit(false)
+    navigation.navigate('main')
+  }
   return (
-    <SafeAreaView style={[mainStyle.container, { paddingTop: 25 }]}>
+    <SafeAreaView style={[mainStyle.container]}>
       <StatusBar
         backgroundColor="#272730"
         barStyle={"light-content"}
@@ -98,7 +110,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
               borderRadius: 10,
               margin: 5,
             }}
-            onPress={() => navigation.goBack()}
+            onPress={goBack}
           >
             <AntDesign name="arrowleft" size={28} color="#fff" />
           </TouchableOpacity>
@@ -108,17 +120,13 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
           <TouchableOpacity
             style={{
               padding: 10,
-              backgroundColor: "#00f",
+              backgroundColor: "#f00",
               borderRadius: 10,
               margin: 5,
             }}
-            onPress={() => setEdit(!edit)}
+            onPress={deleteHabitHandler}
           >
-            {edit ? (
-              <MaterialCommunityIcons name="cancel" size={28} color="#fff" />
-            ) : (
-              <Feather name="edit" size={28} color="#fff" />
-            )}
+            <MaterialIcons name="delete-outline" size={25} color="#fff" />
           </TouchableOpacity>
         </View>
         {/* name */}
@@ -130,7 +138,6 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
             onChangeText={(val) => setHabit({ ...habit, name: val })}
             placeholder="Read book"
             placeholderTextColor="#999"
-            editable={edit}
           />
         </View>
         {/* frequency */}
@@ -149,9 +156,8 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
             <TextInput
               style={[viewHabitStyle.input, { width: 50, textAlign: "center" }]}
               keyboardType="numeric"
-              value={habit.frequency.toString()}
+              value={habit.frequency?.toString()}
               onChangeText={(val) => setFreq(val)}
-              editable={edit}
             />
             <TouchableOpacity
               style={[viewHabitStyle.btn, {}]}
@@ -187,9 +193,8 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
                   { width: 50, textAlign: "center" },
                 ]}
                 keyboardType="numeric"
-                value={habit.amount.toString()}
+                value={habit.amount?.toString()}
                 onChangeText={(val) => setAmount(val)}
-                editable={edit}
               />
               <TouchableOpacity
                 style={[viewHabitStyle.btn, {}]}
@@ -229,7 +234,6 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
                   }
                   placeholder={`${habit.amount} (page) per day`}
                   placeholderTextColor="#999"
-                  editable={edit}
                 />
               </View>
               <View style={[mainStyle.row, mainStyle.between]}>
@@ -247,9 +251,8 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
                       { width: 50, textAlign: "center" },
                     ]}
                     keyboardType="numeric"
-                    value={habit.change.toString()}
+                    value={habit.change?.toString()}
                     onChangeText={(val) => setChange(val)}
-                    editable={edit}
                   />
                   <TouchableOpacity
                     style={[viewHabitStyle.btn, {}]}
@@ -304,7 +307,6 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
             onChangeText={(val) => setHabit({ ...habit, description: val })}
             placeholder="The habit of reading books"
             placeholderTextColor="#999"
-            editable={edit}
           />
         </View>
         {/* color */}
@@ -314,7 +316,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
             <View
               style={[
                 viewHabitStyle.changetColor,
-                { backgroundColor: habit.color },
+                { backgroundColor: `#${habit.color}` },
               ]}
             ></View>
           </View>
@@ -323,7 +325,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
               style={[
                 viewHabitStyle.changetColor,
                 {
-                  backgroundColor: colors[0],
+                  backgroundColor: `#${colors[0]}`,
                   borderWidth: habit.color == colors[0] ? 2 : 0,
                 },
               ]}
@@ -333,7 +335,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
               style={[
                 viewHabitStyle.changetColor,
                 {
-                  backgroundColor: colors[1],
+                  backgroundColor: `#${colors[1]}`,
                   borderWidth: habit.color == colors[1] ? 2 : 0,
                 },
               ]}
@@ -343,7 +345,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
               style={[
                 viewHabitStyle.changetColor,
                 {
-                  backgroundColor: colors[2],
+                  backgroundColor: `#${colors[2]}`,
                   borderWidth: habit.color == colors[2] ? 2 : 0,
                 },
               ]}
@@ -353,7 +355,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
               style={[
                 viewHabitStyle.changetColor,
                 {
-                  backgroundColor: colors[3],
+                  backgroundColor: `#${colors[3]}`,
                   borderWidth: habit.color == colors[3] ? 2 : 0,
                 },
               ]}
@@ -363,7 +365,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
               style={[
                 viewHabitStyle.changetColor,
                 {
-                  backgroundColor: colors[4],
+                  backgroundColor: `#${colors[4]}`,
                   borderWidth: habit.color == colors[4] ? 2 : 0,
                 },
               ]}
@@ -373,7 +375,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
               style={[
                 viewHabitStyle.changetColor,
                 {
-                  backgroundColor: colors[5],
+                  backgroundColor: `#${colors[5]}`,
                   borderWidth: habit.color == colors[5] ? 2 : 0,
                 },
               ]}
@@ -383,7 +385,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
               style={[
                 viewHabitStyle.changetColor,
                 {
-                  backgroundColor: colors[6],
+                  backgroundColor: `#${colors[6]}`,
                   borderWidth: habit.color == colors[6] ? 2 : 0,
                 },
               ]}
@@ -393,7 +395,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
               style={[
                 viewHabitStyle.changetColor,
                 {
-                  backgroundColor: colors[7],
+                  backgroundColor: `#${colors[7]}`,
                   borderWidth: habit.color == colors[7] ? 2 : 0,
                 },
               ]}
@@ -412,7 +414,7 @@ const ViewHabit = ({ navigation, fetchHabits }) => {
           }}
         >
           <Text style={{ color: "#fff", textAlign: "center", fontSize: 22 }}>
-            Saqlash
+            Qayta saqlash
           </Text>
         </TouchableOpacity>
       </View>

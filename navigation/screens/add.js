@@ -70,7 +70,7 @@ const Add = ({fetchHabits}) => {
       habit.amount,
       habit.amountType,
       habit.change,
-      habit.reminder.active,
+      (habit.reminder.active)? 1: 0,
       habit.reminder.time,
       habit.description,
       habit.color
@@ -100,8 +100,8 @@ const Add = ({fetchHabits}) => {
         barStyle={"light-content"}
         style="light"
       />
-        <Text style={[mainStyle.header, {marginBottom: 10}]}>Add new habit</Text>
-      <ScrollView style={{ paddingHorizontal: 10, marginBottom: 40 }}>
+        {/* <Text style={[mainStyle.header, {marginBottom: 10}]}>Add new habit</Text> */}
+      <ScrollView style={{ paddingHorizontal: 10, marginTop: 5}}>
         {/* name */}
         <View style={addStyle.catGroup}>
           <Text style={addStyle.inputTitle}>Habit name: </Text>

@@ -13,14 +13,16 @@ import mainStyle from "../../assets/styles/mainStyle";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 
-export default function Home({navigation}) {
+export default function Home(props) {
+  const {navigation, habits} = props;
+
   return (
     <SafeAreaView style={mainStyle.container}>
       <StatusBar
         backgroundColor="#272730"
         barStyle={"light-content"}
       />
-      <Text style={mainStyle.header}>Habits</Text>
+      {/* <Text style={mainStyle.header}>Habits</Text> */}
       {/* sort habit */}
       {/* <SelectList 
         setSelected={(val) => {}} 
@@ -28,7 +30,7 @@ export default function Home({navigation}) {
         save="value"
       /> */}
       <FlatList
-        data={DATA}
+        data={habits}
         style={{ padding: 5 }}
         renderItem={({ item }) => <Item item={item} navigation={navigation}/>}
         keyExtractor={(item) => item.id}
@@ -42,14 +44,14 @@ const Item = ({item, navigation}) => {
   return (
     <TouchableOpacity style={homeStyle.listItem} onPress={() => navigation.navigate('viewHabit')}>
       <View style={[mainStyle.between, mainStyle.row]}>
-        <Text style={homeStyle.itemTitle}>{(item.title.length>20)? item.title.slice(0, 20)+"...": item.title}</Text>
+        <Text style={homeStyle.itemTitle}>{(String(item.name).length>20)? item.name.slice(0, 20)+"...": item.name}</Text>
         <View style={mainStyle.row}>
           <Text style={homeStyle.itemTimes}>4 time in a week</Text>
           <TouchableOpacity disabled>
             <MaterialCommunityIcons
-              name={item.reminder ? "bell-outline" : "bell-off-outline"}
+              name={item.reminderActive==1 ? "bell-outline" : "bell-off-outline"}
               size={27}
-              color={item.reminder? "#000dfd": "#838996FF"}
+              color={item.reminderActive==1? "#000dfd": "#838996FF"}
             />
           </TouchableOpacity>
         </View>
@@ -77,6 +79,19 @@ const randomColor = () =>{
 }
 
 const DATA = [
+  {
+    "amount": 2, 
+    "amountType": "sdfsdf", 
+    "change": 1, 
+    "color": "08A34FFF", 
+    "createdAt": "2024-01-02 11:12:01", 
+    "description": "sdfsdf", 
+    "frequency": 7, 
+    "id": 1, 
+    "name": "ghgsfdf", 
+    "reminderActive": 0, 
+    "reminderTime": ""
+  },
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
     title: "Read book",

@@ -17,7 +17,6 @@ const Tab = createBottomTabNavigator();
 export default function Main() {
   const [habits, setHabits] = useState("");
   const fetchHabits = async () => {
-    return;
     try {
       getHabit().then((data) => {
         console.log(data);

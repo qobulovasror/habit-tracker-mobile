@@ -5,6 +5,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import mainStyle from "../../assets/styles/mainStyle";
 import { StatusBar } from "expo-status-bar";
@@ -76,7 +77,20 @@ const Add = ({fetchHabits}) => {
     )
 
     fetchHabits()
-
+    setHabit({
+      name: "",
+      frequency: 7,
+      amount: 1,
+      amountType: "",
+      change: 0,
+      reminder: {
+        time: new Date(),
+        active: false,
+      },
+      description: "",
+      color: randomColor()
+    });
+    setAmountDetalisShow(false)
   }
 
   return (
@@ -86,8 +100,8 @@ const Add = ({fetchHabits}) => {
         barStyle={"light-content"}
         style="light"
       />
-      <View style={{ paddingHorizontal: 10 }}>
         <Text style={[mainStyle.header, {marginBottom: 10}]}>Add new habit</Text>
+      <ScrollView style={{ paddingHorizontal: 10, marginBottom: 40 }}>
         {/* name */}
         <View style={addStyle.catGroup}>
           <Text style={addStyle.inputTitle}>Habit name: </Text>
@@ -221,23 +235,23 @@ const Add = ({fetchHabits}) => {
         <View style={[addStyle.catGroup,{ flexDirection: "column" }]}>
           <View style={[mainStyle.row, ]}>
             <Text style={addStyle.inputTitle}>Color: </Text>
-            <View style={[addStyle.changetColor, {backgroundColor: habit.color}]}></View>
+            <View style={[addStyle.changetColor, {backgroundColor: `#${habit.color}`}]}></View>
           </View>
           <View style={[mainStyle.row, mainStyle.around]}>
-            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: colors[0], borderWidth: (habit.color==colors[0])? 2: 0}]} onPress={()=>changetColor(colors[0])}></TouchableOpacity>
-            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: colors[1], borderWidth: (habit.color==colors[1])? 2: 0}]} onPress={()=>changetColor(colors[1])}></TouchableOpacity>
-            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: colors[2], borderWidth: (habit.color==colors[2])? 2: 0}]} onPress={()=>changetColor(colors[2])}></TouchableOpacity>
-            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: colors[3], borderWidth: (habit.color==colors[3])? 2: 0}]} onPress={()=>changetColor(colors[3])}></TouchableOpacity>
-            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: colors[4], borderWidth: (habit.color==colors[4])? 2: 0}]} onPress={()=>changetColor(colors[4])}></TouchableOpacity>
-            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: colors[5], borderWidth: (habit.color==colors[5])? 2: 0}]} onPress={()=>changetColor(colors[5])}></TouchableOpacity>
-            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: colors[6], borderWidth: (habit.color==colors[6])? 2: 0}]} onPress={()=>changetColor(colors[6])}></TouchableOpacity>
-            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: colors[7], borderWidth: (habit.color==colors[7])? 2: 0}]} onPress={()=>changetColor(colors[7])}></TouchableOpacity>
+            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: `#${colors[0]}`, borderWidth: (habit.color==colors[0])? 2: 0}]} onPress={()=>changetColor(colors[0])}></TouchableOpacity>
+            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: `#${colors[1]}`, borderWidth: (habit.color==colors[1])? 2: 0}]} onPress={()=>changetColor(colors[1])}></TouchableOpacity>
+            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: `#${colors[2]}`, borderWidth: (habit.color==colors[2])? 2: 0}]} onPress={()=>changetColor(colors[2])}></TouchableOpacity>
+            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: `#${colors[3]}`, borderWidth: (habit.color==colors[3])? 2: 0}]} onPress={()=>changetColor(colors[3])}></TouchableOpacity>
+            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: `#${colors[4]}`, borderWidth: (habit.color==colors[4])? 2: 0}]} onPress={()=>changetColor(colors[4])}></TouchableOpacity>
+            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: `#${colors[5]}`, borderWidth: (habit.color==colors[5])? 2: 0}]} onPress={()=>changetColor(colors[5])}></TouchableOpacity>
+            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: `#${colors[6]}`, borderWidth: (habit.color==colors[6])? 2: 0}]} onPress={()=>changetColor(colors[6])}></TouchableOpacity>
+            <TouchableOpacity style={[addStyle.changetColor, {backgroundColor: `#${colors[7]}`, borderWidth: (habit.color==colors[7])? 2: 0}]} onPress={()=>changetColor(colors[7])}></TouchableOpacity>
           </View>
         </View>
         <TouchableOpacity onPress={submitHabit} style={{backgroundColor: "#00f", width: '100%', marginVertical: 5, borderRadius: 10, padding: 15}}>
           <Text style={{color: "#fff", textAlign: 'center', fontSize: 22}}>Saqlash</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -8,7 +8,7 @@ import { getHabit } from "../services/habitDB";
 import Home from "./screens/home";
 import Add from "./screens/add";
 import ViewHabit from "./stackScreen/viewHabit";
-import CheckHabit from "./screens/checkHabit";
+import CheckHabit from "./screens/allHabits";
 import Setting from "./screens/setting";
 
 const Stack = createStackNavigator();
@@ -32,7 +32,6 @@ export default function Main() {
   const fetchHabits = async () => {
     try {
       getHabit().then((data) => {
-        // console.log(data);
         if (data) {
           setHabits(data);
         }
@@ -102,7 +101,7 @@ const TabNavigationHadler = (props) => {
       }}
     >
       <Tab.Screen
-        name="Habits"
+        name="Today's habits"
         options={{
           tabBarLabel: "",
           tabBarIcon: ({ color, size }) => (
@@ -115,7 +114,7 @@ const TabNavigationHadler = (props) => {
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="Today's habits"
+        name="All habits"
         options={{
           tabBarLabel: "", //"Today's habit",
           tabBarIcon: ({ color, size }) => (

@@ -2,11 +2,12 @@ import { StyleSheet } from "react-native";
 
 const checkHabitStyle = StyleSheet.create({
     listItem: {
-        width: '100%',
-        padding: 15,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
         borderRadius: 17,
         backgroundColor: "#34343DFF",
-        marginVertical: 10
+        marginVertical: 10,
+        marginHorizontal: 5
     },
     itemTitle: {
         fontSize: 19,

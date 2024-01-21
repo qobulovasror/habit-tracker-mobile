@@ -2,11 +2,11 @@ import { StyleSheet } from "react-native";
 
 const homeStyle = StyleSheet.create({
     listItem: {
-        width: '100%',
         padding: 15,
         borderRadius: 17,
         backgroundColor: "#34343DFF",
-        marginVertical: 10
+        marginVertical: 10,
+        marginHorizontal: 5
     },
     itemTitle: {
         fontSize: 19,

@@ -10,6 +10,7 @@ import Add from "./screens/add";
 import ViewHabit from "./stackScreen/viewHabit";
 import CheckHabit from "./screens/allHabits";
 import Setting from "./screens/setting";
+import Statistic from "./screens/statistic";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -143,7 +144,7 @@ const TabNavigationHadler = (props) => {
       </Tab.Screen>
       <Tab.Screen
         name="Statistics"
-        component={Home}
+        component={Statistic}
         options={{
           tabBarLabel: "", //'Statistic',
           tabBarIcon: ({ color, size }) => (

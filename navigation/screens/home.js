@@ -39,7 +39,11 @@ const Item = ({ item, navigation }) => {
               ? item.description.slice(0, 30) + "..."
               : item.description}
           </Text>
-
+          <View style={[mainStyle.row]}>
+            <Text style={{color: '#fff', fontSize: 18, }}>Amount: </Text>
+            <Text style={{color: '#fff', fontSize: 18, }}>{item.amount}  </Text>
+            <Text style={{color: '#fff', fontSize: 18, }}>{item.amountType}</Text>
+          </View>
         </View>
         <View style={mainStyle.row}>
           <TouchableOpacity style={{padding: 8, height: 45, backgroundColor: "#00f", borderRadius: 10}}>

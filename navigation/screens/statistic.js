@@ -6,7 +6,6 @@ import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import React from "react";
 
 const Statistic = () => {
   const [setConfig, setSetConfig] = useState({
@@ -26,7 +25,6 @@ const Statistic = () => {
         barStyle={"light-content"}
         style="light"
       />
-      <Text style={[mainStyle.header, { margin: 10 }]}>Settings</Text>
       <ScrollView
         style={{ paddingHorizontal: 10, marginTop: 10, marginBottom: 50 }}
       >

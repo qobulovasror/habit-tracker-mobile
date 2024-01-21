@@ -22,8 +22,9 @@ import { colors, randomColor } from "../../assets/config/colors";
 import { updateHabit, deleteHabit } from "../../services/habitDB";
 
 const ViewHabit = (props) => {
+  console.log(selectHabit)
   const {navigation, fetchHabits, selectHabit, setSelectHabit} = props
-  if(!selectHabit) {
+  if(!selectHabit || selectHabit==undefined) {
     navigation.navigate('main')
     setSelectHabit()
   }

@@ -11,7 +11,7 @@ const createHabitTable = () => {
         amountType TEXT,
         change INTEGER DEFAULT 0,
         reminderActive INTEGER DEFAULT 0, -- Assuming it's a boolean (0 or 1)
-        reminderTime TIMESTAMP,
+        reminderTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         description TEXT,
         color TEXT,
         createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP

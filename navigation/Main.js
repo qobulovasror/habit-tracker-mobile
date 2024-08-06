@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Feather, AntDesign, Ionicons, Octicons } from "@expo/vector-icons";
+import { Feather, AntDesign, Ionicons, Octicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { getHabit } from "../services/habitDB";
 
 // srceens
@@ -43,7 +43,7 @@ export default function Main() {
   };
 
   useEffect(() => {
-    fetchHabits();
+    // fetchHabits();
   }, []);
   return (
     <Stack.Navigator
@@ -143,15 +143,15 @@ const TabNavigationHadler = (props) => {
         {(props) => <Add {...props} fetchHabits={fetchHabits} />}
       </Tab.Screen>
       <Tab.Screen
-        name="Statistics"
+        name="Notes"
         component={Statistic}
         options={{
-          tabBarLabel: "", //'Statistic',
+          tabBarLabel: "", //'Notes',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              name="ios-bar-chart-outline"
+            <MaterialCommunityIcons 
+              name="note-edit-outline" 
               color={color}
-              size={size + 2}
+              size={size + 2} 
             />
           ),
         }}

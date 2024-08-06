@@ -27,7 +27,6 @@ const Add = ({fetchHabits}) => {
       time: new Date(),
       active: false,
     },
-    description: "",
     color: randomColor()
   });
 
@@ -69,10 +68,8 @@ const Add = ({fetchHabits}) => {
       habit.frequency,
       habit.amount,
       habit.amountType,
-      habit.change,
       (habit.reminder.active)? 1: 0,
       habit.reminder.time,
-      habit.description,
       habit.color
     )
 
@@ -172,23 +169,6 @@ const Add = ({fetchHabits}) => {
                     placeholder={`${habit.amount} (page) per day`} 
                     placeholderTextColor="#999"/>
                 </View>
-                <View style={[mainStyle.row, mainStyle.between]}>
-                  <Text style={addStyle.inputTitle}>Daily change: </Text>
-                  <View style={[mainStyle.row]}>
-                    <TouchableOpacity style={[addStyle.btn, {}]} onPress={()=>setChange(habit.change-1)}>
-                      <Ionicons name="trending-down" size={24} color="#fff" />
-                    </TouchableOpacity>
-                    <TextInput
-                      style={[addStyle.input, { width: 50, textAlign: 'center' }]}
-                      keyboardType="numeric"
-                      value={habit.change.toString()}
-                      onChangeText={val=>setChange(val)}
-                    />
-                    <TouchableOpacity style={[addStyle.btn, {}]} onPress={()=>setChange(habit.change+1)}>
-                      <Ionicons name="trending-up" size={24} color="#fff" />
-                    </TouchableOpacity>
-                  </View>
-                </View>
             </View>
           }
         </View>
@@ -218,18 +198,6 @@ const Add = ({fetchHabits}) => {
               style={{ backgroundColor: "#3D3D46FF" }}
             />
           )}
-        </View>
-        {/* description */}
-        <View style={[addStyle.catGroup, { flexDirection: "column" }]}>
-          <Text style={addStyle.inputTitle}>Description: </Text>
-          <TextInput
-            style={[addStyle.input, { width: "100%", margin: 5, padding: 10 }]}
-            multiline={true}
-            value={habit.description}
-            onChangeText={val=>setHabit({...habit, description: val})}
-            placeholder="The habit of reading books"
-            placeholderTextColor="#999"
-          />
         </View>
         {/* color */}
         <View style={[addStyle.catGroup,{ flexDirection: "column" }]}>

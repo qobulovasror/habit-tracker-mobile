@@ -9,12 +9,17 @@ const createHabitTable = () => {
         frequency INTEGER NOT NULL, 
         amount INTEGER DEFAULT 1,
         amountType TEXT,
-        change INTEGER DEFAULT 0,
         reminderActive INTEGER DEFAULT 0, -- Assuming it's a boolean (0 or 1)
         reminderTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        description TEXT,
-        color TEXT,
-        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        color TEXT
+    );`,
+        []
+    );
+    tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS note (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        title TEXT NOT NULL,
+        body TEXT NOT NULL
     );`,
         []
     );
@@ -22,14 +27,12 @@ const createHabitTable = () => {
 };
 
 const addHabit = (name, frequency, amount, amountType, change, reminderActive, reminderTime, description, color) => {
-  // console.log(name, frequency, amount, amountType, change, reminderActive, reminderTime, description, color);
   try {
     db.transaction((tx) => {
       tx.executeSql(
         `INSERT INTO habit 
-        (name, frequency, amount, amountType, change, reminderActive, reminderTime, description, color) 
+        (name, frequency, amount, amountType, reminderActive, reminderTime, color) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        // ["ghgsfdf", 7, 2, "sdfsdf", 1, 0, "", "sdfsdf","08A34FFF"],
         [name, frequency, amount, amountType, change, reminderActive, Math.floor(new Date(reminderTime).getTime() / 1000), description, color],
         (_, results) => {
           console.log("Rows affected:", results);

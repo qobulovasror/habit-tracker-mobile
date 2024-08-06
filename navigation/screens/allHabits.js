@@ -21,11 +21,6 @@ const CheckHabit = (props) => {
       backgroundColor="#272730"
       barStyle={"light-content"}
     />
-    {/* <SelectList 
-      setSelected={(val) => {}} 
-      data={[{ key: "2", value: "Appliances" }]} 
-      save="value"
-    /> */}
     <FlatList
       data={habits}
       style={{ padding: 5 }}

@@ -6,7 +6,7 @@ const checkHabitStyle = StyleSheet.create({
         paddingHorizontal: 15,
         borderRadius: 17,
         backgroundColor: "#34343DFF",
-        marginVertical: 10,
+        marginVertical: 7,
         marginHorizontal: 5
     },
     itemTitle: {

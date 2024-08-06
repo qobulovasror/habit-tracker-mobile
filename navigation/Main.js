@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Feather, AntDesign, Ionicons, Octicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather, AntDesign, Ionicons, Octicons, MaterialCommunityIcons, FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { getHabit } from "../services/habitDB";
 
 // srceens
-import Home from "./screens/home";
-import Add from "./screens/add";
+import Add from "./stackScreen/add";
 import ViewHabit from "./stackScreen/viewHabit";
+
+import Home from "./screens/home";
+import TodoList from "./screens/todo";
 import CheckHabit from "./screens/allHabits";
 import Setting from "./screens/setting";
 import Statistic from "./screens/statistic";
@@ -70,6 +72,22 @@ export default function Main() {
         )}
       </Stack.Screen>
       <Stack.Screen
+        name="addHabit"
+        options={{
+          title: "",
+          cardStyle: { paddingTop: 60, backgroundColor: "#272730FF" },
+        }}
+      >
+        {(props) => (
+          <Add
+            {...props}
+            selectHabit={selectHabit}
+            setSelectHabit={setSelectHabit}
+            fetchHabits={fetchHabits}
+          />
+        )}
+      </Stack.Screen>
+      {/* <Stack.Screen
         name="viewHabit"
         options={{
           title: "",
@@ -84,7 +102,7 @@ export default function Main() {
             fetchHabits={fetchHabits}
           />
         )}
-      </Stack.Screen>
+      </Stack.Screen> */}
     </Stack.Navigator>
   );
 }
@@ -115,11 +133,11 @@ const TabNavigationHadler = (props) => {
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="All habits"
+        name="Habit statistics"
         options={{
           tabBarLabel: "", //"Today's habit",
           tabBarIcon: ({ color, size }) => (
-            <Octicons name="checklist" size={size + 2} color={color} />
+            <FontAwesome name="bar-chart" size={size+2} color={color} />
           ),
         }}
       >
@@ -128,19 +146,15 @@ const TabNavigationHadler = (props) => {
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="Add new habit"
+        name="TODO list"
         options={{
           tabBarLabel: "", //'Add',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              name="ios-add-circle-outline"
-              color={color}
-              size={size + 4}
-            />
+            <Octicons name="checklist" size={size + 2} color={color} />
           ),
         }}
       >
-        {(props) => <Add {...props} fetchHabits={fetchHabits} />}
+        {(props) => <TodoList {...props} fetchHabits={fetchHabits} />}
       </Tab.Screen>
       <Tab.Screen
         name="Notes"

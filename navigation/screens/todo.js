@@ -16,7 +16,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import {colors, randomColor} from '../../assets/config/colors'
 import { addHabit } from "../../services/habitDB";
 
-const Add = ({fetchHabits}) => {
+const TodoList = ({fetchHabits, navigation}) => {
   const [habit, setHabit] = useState({
     name: "",
     frequency: 7,
@@ -29,6 +29,10 @@ const Add = ({fetchHabits}) => {
     },
     color: randomColor()
   });
+
+  const goBack = () => {
+    navigation.navigate('main')
+  }
 
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -97,7 +101,11 @@ const Add = ({fetchHabits}) => {
         barStyle={"light-content"}
         style="light"
       />
-        {/* <Text style={[mainStyle.header, {marginBottom: 10}]}>Add new habit</Text> */}
+      <TouchableOpacity style={[mainStyle.goBack, {zIndex: 5}]} onPress={goBack}>
+          <Ionicons name="arrow-back-sharp" size={30} color="#fff" />
+        </TouchableOpacity>
+      <Text style={[mainStyle.header, {marginBottom: 7, marginTop: -30}]}>Add new habit</Text>
+        
       <ScrollView style={{ paddingHorizontal: 10, marginTop: 5}}>
         {/* name */}
         <View style={addStyle.catGroup}>
@@ -226,4 +234,4 @@ const Add = ({fetchHabits}) => {
 
 
 
-export default Add;
+export default TodoList;

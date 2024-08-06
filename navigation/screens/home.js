@@ -2,12 +2,15 @@
 import React from "react";
 import { FlatList, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import checkHabitStyle from "../../assets/styles/checkHabitStyle";
-import { Feather, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import mainStyle from "../../assets/styles/mainStyle";
 
 
 export default function Home(props) {
   const {navigation, habits} = props;
+  const openAddWin = () => {
+    navigation.navigate('addHabit');
+  }
   return (
     <SafeAreaView style={mainStyle.container}>
       <StatusBar backgroundColor="#272730" barStyle={"light-content"} />
@@ -17,6 +20,9 @@ export default function Home(props) {
         renderItem={({ item }) => <Item item={item} navigation={navigation} />}
         keyExtractor={(item) => item.id}
       />
+      <TouchableOpacity style={mainStyle.addBtn} onPress={openAddWin}>
+        <Ionicons name="ios-add-circle-outline" color={"#fff"} size={40} />
+      </TouchableOpacity>
     </SafeAreaView>
    
   );

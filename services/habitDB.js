@@ -23,6 +23,13 @@ const createHabitTable = () => {
     );`,
         []
     );
+    tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS todo (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        name TEXT NOT NULL
+    );`,
+        []
+    );
   });
 };
 

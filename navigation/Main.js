@@ -12,7 +12,7 @@ import Home from "./screens/home";
 import TodoList from "./screens/todo";
 import CheckHabit from "./screens/allHabits";
 import Setting from "./screens/setting";
-import Statistic from "./screens/statistic";
+import Notes from "./screens/notes";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -158,7 +158,7 @@ const TabNavigationHadler = (props) => {
       </Tab.Screen>
       <Tab.Screen
         name="Notes"
-        component={Statistic}
+        component={Notes}
         options={{
           tabBarLabel: "", //'Notes',
           tabBarIcon: ({ color, size }) => (

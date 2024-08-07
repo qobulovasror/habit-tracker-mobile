@@ -35,7 +35,9 @@ const mainStyle = StyleSheet.create({
         position: 'absolute',
         bottom: '3%',
         right: '3%',
-        padding: 10
+        padding: 10,
+        backgroundColor: '#00f',
+        borderRadius: 14
     },
     goBack: {
         paddingStart: 10,

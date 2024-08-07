@@ -31,7 +31,7 @@ const TodoList = ({navigation}) => {
         style="light"
       />
       <FlatList
-        data={todoData}
+        data={[todoData]}
         style={{ padding: 3 }}
         renderItem={({item}) => (
           <TodoItem item={item}/>
@@ -81,6 +81,31 @@ const todoData = [
   },
   {
     id: 4,
+    name: "O'qish 3",
+    status: 0
+  },
+  {
+    id: 42,
+    name: "O'qish 3",
+    status: 0
+  },
+  {
+    id: 43,
+    name: "O'qish 3",
+    status: 0
+  },
+  {
+    id: 422,
+    name: "O'qish 3",
+    status: 0
+  },
+  {
+    id: 423422,
+    name: "O'qish 3",
+    status: 0
+  },
+  {
+    id: 443,
     name: "O'qish 3",
     status: 0
   },

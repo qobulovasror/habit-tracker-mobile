@@ -1,36 +1,44 @@
-import { useEffect, useState } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { Feather, AntDesign, Ionicons, Octicons, MaterialCommunityIcons, FontAwesome5, FontAwesome } from "@expo/vector-icons";
-import { getHabit } from "../services/habitDB";
+import { useEffect, useState } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import {
+  Feather,
+  AntDesign,
+  Ionicons,
+  Octicons,
+  MaterialCommunityIcons,
+  FontAwesome5,
+  FontAwesome,
+} from '@expo/vector-icons';
+import { getHabit } from '../services/habitDB';
 
 // srceens
-import Add from "./stackScreen/add";
-import ViewHabit from "./stackScreen/viewHabit";
+import Add from './stackScreen/add';
+import ViewHabit from './stackScreen/viewHabit';
 
-import Home from "./screens/home";
-import TodoList from "./screens/todo";
-import CheckHabit from "./screens/allHabits";
-import Setting from "./screens/setting";
-import Notes from "./screens/notes";
+import Home from './screens/home';
+import TodoList from './screens/todo';
+import CheckHabit from './screens/allHabits';
+import Setting from './screens/setting';
+import Notes from './screens/notes';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function Main() {
-  const [habits, setHabits] = useState("");
+  const [habits, setHabits] = useState('');
   const [selectHabit, setSelectHabit] = useState({
     amount: 2,
-    amountType: "sdfsdf",
+    amountType: 'sdfsdf',
     change: 1,
-    color: "08A34FFF",
-    createdAt: "2024-01-02 11:12:01",
-    description: "sdfsdf",
+    color: '08A34FFF',
+    createdAt: '2024-01-02 11:12:01',
+    description: 'sdfsdf',
     frequency: 7,
     id: 1,
-    name: "ghgsfdf",
+    name: 'ghgsfdf',
     reminderActive: 0,
-    reminderTime: "",
+    reminderTime: '',
   });
   const fetchHabits = async () => {
     try {
@@ -51,7 +59,7 @@ export default function Main() {
     <Stack.Navigator
       initialRouteName="main"
       screenOptions={{
-        headerTintColor: "#fff",
+        headerTintColor: '#fff',
         headerStyle: { height: 0 },
         headerShown: false,
       }}
@@ -59,7 +67,7 @@ export default function Main() {
       <Stack.Screen
         name="main"
         options={{
-          title: "",
+          title: '',
         }}
       >
         {(props) => (
@@ -74,8 +82,8 @@ export default function Main() {
       <Stack.Screen
         name="addHabit"
         options={{
-          title: "",
-          cardStyle: { paddingTop: 60, backgroundColor: "#272730FF" },
+          title: '',
+          cardStyle: { paddingTop: 60, backgroundColor: '#272730FF' },
         }}
       >
         {(props) => (
@@ -113,16 +121,16 @@ const TabNavigationHadler = (props) => {
     <Tab.Navigator
       initialRouteName="Habits"
       screenOptions={{
-        headerTintColor: "#fff",
+        headerTintColor: '#fff',
         headerTitleStyle: { fontSize: 28 },
-        headerStyle: { backgroundColor: "#272730FF" },
-        tabBarStyle: { backgroundColor: "#272730FF" },
+        headerStyle: { backgroundColor: '#272730FF' },
+        tabBarStyle: { backgroundColor: '#272730FF' },
       }}
     >
       <Tab.Screen
         name="Today's habits"
         options={{
-          tabBarLabel: "",
+          tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="home" color={color} size={size + 2} />
           ),
@@ -135,9 +143,9 @@ const TabNavigationHadler = (props) => {
       <Tab.Screen
         name="Habit statistics"
         options={{
-          tabBarLabel: "", //"Today's habit",
+          tabBarLabel: '', //"Today's habit",
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="bar-chart" size={size+2} color={color} />
+            <FontAwesome name="bar-chart" size={size + 2} color={color} />
           ),
         }}
       >
@@ -148,7 +156,7 @@ const TabNavigationHadler = (props) => {
       <Tab.Screen
         name="TODO list"
         options={{
-          tabBarLabel: "", //'Add',
+          tabBarLabel: '', //'Add',
           tabBarIcon: ({ color, size }) => (
             <Octicons name="checklist" size={size + 2} color={color} />
           ),
@@ -158,23 +166,20 @@ const TabNavigationHadler = (props) => {
       </Tab.Screen>
       <Tab.Screen
         name="Notes"
-        component={Notes}
         options={{
-          tabBarLabel: "", //'Notes',
+          tabBarLabel: '', //'Notes',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons 
-              name="note-edit-outline" 
-              color={color}
-              size={size + 2} 
-            />
+            <MaterialCommunityIcons name="note-edit-outline" color={color} size={size + 2} />
           ),
         }}
-      />
+      >
+        {(props) => <Notes {...props} fetchHabits={fetchHabits} />}
+      </Tab.Screen>
       <Tab.Screen
         name="Settings"
         component={Setting}
         options={{
-          tabBarLabel: "", //'Settings',
+          tabBarLabel: '', //'Settings',
           tabBarIcon: ({ color, size }) => (
             <Feather name="settings" color={color} size={size + 2} />
           ),

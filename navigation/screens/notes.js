@@ -15,31 +15,50 @@ import Checkbox from 'expo-checkbox';
 
 const Notes = () => {
   const openAddWin = () => {};
-
   return (
     <SafeAreaView style={mainStyle.container}>
       <StatusBar
         backgroundColor="#272730"
-        barStyle={'light-content'}
+        barStyle={"light-content"}
+        style="light"
+      />
+      <FlatList
+        data={[]}
+        style={{ padding: 3 }}
+        renderItem={({item}) => (
+          <></> 
+        )}
+        keyExtractor={(item) => item.id}
+      />
+      <TouchableOpacity style={mainStyle.addBtn} onPress={openAddWin}>
+        <Ionicons name="ios-add-circle-outline" color={"#fff"} size={40} />
+      </TouchableOpacity>
+    </SafeAreaView>
+  )
+  return (
+    <SafeAreaView style={mainStyle.container}>
+      <StatusBar
+        backgroundColor="#272730"
+        barStyle={"light-content"}
         style="light"
       />
       <FlatList
         data={noteData}
-        style={{ padding: 3 }}
-        renderItem={({ item }) => <NoteItem item={item} />}
+        style={{ padding: 3, borderWidth: 1, marginBottom: 0 }}
+        renderItem={({item}) => (
+          <NoteItem item={item}/>
+        )}
         keyExtractor={(item) => item.id}
       />
-      <TouchableOpacity
-        style={{ position: 'absolute', bottom: '10%', right: '10%', padding: 10 }}
-        onPress={openAddWin}
-      >
-        <Ionicons name="ios-add-circle-outline" color={'#fff'} size={40} />
+      <TouchableOpacity style={[mainStyle.addBtn, {top: 0}]} onPress={openAddWin}>
+        <Ionicons name="ios-add-circle-outline" color={"#fff"} size={40} />
       </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 const NoteItem = ({ item }) => {
+  return (<></>)
   return (
     <TouchableOpacity
       style={{
@@ -83,6 +102,46 @@ const noteData = [
   {
     id: 4,
     name: "O'qish 3",
+    status: 0,
+  },
+  {
+    id: 5,
+    name: "O'qish",
+    status: 0,
+  },
+  {
+    id: 6,
+    name: "O'qish 3",
+    status: 0,
+  },
+  {
+    id: 7,
+    name: "O'qish",
+    status: 0,
+  },
+  {
+    id: 445,
+    name: "O'qish 3",
+    status: 0,
+  },
+  {
+    id: 33,
+    name: "O'qish",
+    status: 0,
+  },
+  {
+    id: 42,
+    name: "O'qish 3",
+    status: 0,
+  },
+  {
+    id: 323,
+    name: "O'qish",
+    status: 0,
+  },
+  {
+    id: 4423,
+    name: "O'qish 31",
     status: 0,
   },
 ];

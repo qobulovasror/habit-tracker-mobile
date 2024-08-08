@@ -14,9 +14,9 @@ import { AntDesign, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { Switch } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors, randomColor } from '../../assets/config/colors';
-import { addHabit } from '../../services/habitDB';
+import { addTodo } from '../../services/todoDB';
 
-const AddTodo = ({ navigation }) => {
+const AddTodo = ({ navigation, fetchTodos }) => {
   const [title, setTitle] = useState("");
 
   const goBack = () => {
@@ -24,12 +24,10 @@ const AddTodo = ({ navigation }) => {
   };
 
   const submitHabit = () => {
-    //add habit to database here
-
     // chack datas
     if (title.length<3) return alert('Title must be at least 3 characters long');
-    // addTodo to DB
-    // fetchTodo();
+    addTodo(title, 0);    
+    fetchTodos();
     goBack()
   };
 

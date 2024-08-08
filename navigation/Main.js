@@ -11,6 +11,7 @@ import {
   FontAwesome,
 } from '@expo/vector-icons';
 import { getHabit } from '../services/habitDB';
+import { getTodos } from '../services/todoDB';
 
 // srceens
 import AddHabit from './stackScreen/addHabit';
@@ -29,6 +30,9 @@ const Tab = createBottomTabNavigator();
 
 export default function Main() {
   const [habits, setHabits] = useState('');
+  const [todos, setTodos] = useState('');
+  const [notes, setNotes] = useState('');
+
   const [selectHabit, setSelectHabit] = useState({
     amount: 2,
     amountType: 'sdfsdf',
@@ -42,6 +46,7 @@ export default function Main() {
     reminderActive: 0,
     reminderTime: '',
   });
+
   const fetchHabits = async () => {
     try {
       getHabit().then((data) => {
@@ -53,9 +58,21 @@ export default function Main() {
       console.log(error);
     }
   };
+  const fetchTodos = async () => {
+    try {
+      getTodos().then((data) => {
+        if (data) {
+          setTodos(data);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     // fetchHabits();
+    fetchTodos();
   }, []);
   return (
     <Stack.Navigator
@@ -75,6 +92,9 @@ export default function Main() {
         {(props) => (
           <TabNavigationHadler
             {...props}
+            todos={todos}
+            setTodos={setTodos}
+            fetchTodos={fetchTodos}
             habits={habits}
             setHabits={setHabits}
             fetchHabits={fetchHabits}
@@ -107,6 +127,7 @@ export default function Main() {
         {(props) => (
           <AddTodo
             {...props}
+            fetchTodos={fetchTodos}
           />
         )}
       </Stack.Screen>
@@ -128,7 +149,7 @@ export default function Main() {
 }
 
 const TabNavigationHadler = (props) => {
-  const { habits, setHabits, fetchHabits } = props;
+  const { habits, setHabits, fetchTodos, todos, setTodos, fetchHabits } = props;
   return (
     <Tab.Navigator
       initialRouteName="Habits"
@@ -174,7 +195,11 @@ const TabNavigationHadler = (props) => {
           ),
         }}
       >
-        {(props) => <TodoList {...props} fetchHabits={fetchHabits} />}
+        {(props) => <TodoList 
+          {...props} 
+          todos={todos}
+          fetchTodos={fetchTodos} 
+        />}
       </Tab.Screen>
       <Tab.Screen
         name="Notes"

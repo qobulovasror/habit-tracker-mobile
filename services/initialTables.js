@@ -37,11 +37,13 @@ const createNoteTable = () => {
   db.transaction((tx) => {
     tx.executeSql(
       `CREATE TABLE IF NOT EXISTS note (
-        id INTEGER PRIMARY KEY AUTOINSCREMENT, 
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
         title TEXT NOT NULL,
         body TEXT NOT NULL
     );`,
-      []
+      [],
+      ()=>{},
+      (txObj, error) => console.log('Error : ', error)
     );
   });
 };

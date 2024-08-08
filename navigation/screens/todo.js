@@ -99,39 +99,6 @@ const TodoItem = ({ item, fetchTodos }) => {
   );
 };
 
-const todoData = [
-  {
-    id: 1,
-    name: "O'qish",
-    status: true,
-  },
-  {
-    id: 2,
-    name: 'Dars',
-    status: false,
-  },
-  {
-    id: 3,
-    name: "O'qish",
-    status: 0,
-  },
-  {
-    id: 4,
-    name: "O'qish 3",
-    status: 0,
-  },
-  {
-    id: 42,
-    name: "O'qish 3",
-    status: 0,
-  },
-  {
-    id: 43,
-    name: "O'qish 3",
-    status: 0,
-  },
-];
-
 export default TodoList;
 
 //I will edit add btn

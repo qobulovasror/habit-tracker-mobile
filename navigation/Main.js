@@ -12,6 +12,7 @@ import {
 } from '@expo/vector-icons';
 import { getHabit } from '../services/habitDB';
 import { getTodos } from '../services/todoDB';
+import { getNotes } from '../services/noteDB';
 
 // srceens
 import AddHabit from './stackScreen/addHabit';
@@ -32,6 +33,8 @@ export default function Main() {
   const [habits, setHabits] = useState('');
   const [todos, setTodos] = useState('');
   const [notes, setNotes] = useState('');
+
+  const [targetNote, setTargetNote] = useState(null)
 
   const [selectHabit, setSelectHabit] = useState({
     amount: 2,
@@ -70,9 +73,22 @@ export default function Main() {
     }
   };
 
+  const fetchNotes = async () => {
+    try {
+      getNotes().then((data) => {
+        if (data) {
+          setNotes(data);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     // fetchHabits();
     fetchTodos();
+    fetchNotes();
   }, []);
   return (
     <Stack.Navigator
@@ -93,8 +109,12 @@ export default function Main() {
           <TabNavigationHadler
             {...props}
             todos={todos}
-            setTodos={setTodos}
             fetchTodos={fetchTodos}
+
+            notes={notes}
+            fetchNotes={fetchNotes}
+            setTargetNote={setTargetNote}
+
             habits={habits}
             setHabits={setHabits}
             fetchHabits={fetchHabits}
@@ -117,6 +137,7 @@ export default function Main() {
           />
         )}
       </Stack.Screen>
+      {/* add todo screen */}
       <Stack.Screen
         name="addTodo"
         options={{
@@ -131,6 +152,7 @@ export default function Main() {
           />
         )}
       </Stack.Screen>
+      {/* add note screen */}
       <Stack.Screen
         name="addNote"
         options={{
@@ -141,6 +163,9 @@ export default function Main() {
         {(props) => (
           <AddNote
             {...props}
+            fetchNotes={fetchNotes}
+            targetNote={targetNote}
+            setTargetNote={setTargetNote}
           />
         )}
       </Stack.Screen>
@@ -149,7 +174,11 @@ export default function Main() {
 }
 
 const TabNavigationHadler = (props) => {
-  const { habits, setHabits, fetchTodos, todos, setTodos, fetchHabits } = props;
+  const { 
+    habits, fetchHabits,
+    todos, fetchTodos, setTargetNote,
+    notes, fetchNotes 
+  } = props;
   return (
     <Tab.Navigator
       initialRouteName="Habits"
@@ -210,7 +239,12 @@ const TabNavigationHadler = (props) => {
           ),
         }}
       >
-        {(props) => <Notes {...props} fetchHabits={fetchHabits} />}
+        {(props) => <Notes 
+          {...props} 
+          notes={notes} 
+          fetchNotes={fetchNotes}
+          setTargetNote={setTargetNote}
+        />}
       </Tab.Screen>
       <Tab.Screen
         name="Settings"

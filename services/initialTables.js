@@ -9,11 +9,14 @@ const createHabitTable = () => {
         frequency INTEGER NOT NULL, 
         amount INTEGER DEFAULT 1,
         amountType TEXT,
+        change INTEGER DEFAULT 0,
         reminderActive INTEGER DEFAULT 0, -- Assuming it's a boolean (0 or 1)
         reminderTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         color TEXT
     );`,
-      []
+      [],
+      ()=>{},
+      (_, error) => console.log(error)
     );
   });
 };

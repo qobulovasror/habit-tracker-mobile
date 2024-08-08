@@ -54,6 +54,7 @@ export default function Main() {
     try {
       getHabit().then((data) => {
         if (data) {
+          console.log(data);
           setHabits(data);
         }
       });
@@ -86,7 +87,7 @@ export default function Main() {
   };
 
   useEffect(() => {
-    // fetchHabits();
+    fetchHabits();
     fetchTodos();
     fetchNotes();
   }, []);
@@ -121,6 +122,7 @@ export default function Main() {
           />
         )}
       </Stack.Screen>
+      {/* add habit screen */}
       <Stack.Screen
         name="addHabit"
         options={{

@@ -8,7 +8,6 @@ const addHabit = (
   change,
   reminderActive,
   reminderTime,
-  description,
   color
 ) => {
   try {
@@ -16,8 +15,8 @@ const addHabit = (
       (tx) => {
         tx.executeSql(
           `INSERT INTO habit 
-        (name, frequency, amount, amountType, reminderActive, reminderTime, color) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        (name, frequency, amount, amountType, change, reminderActive, reminderTime, color) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
           [
             name,
             frequency,
@@ -28,11 +27,9 @@ const addHabit = (
             Math.floor(new Date(reminderTime).getTime() / 1000),
             color,
           ],
-          (_, results) => {
-            console.log('Rows affected:', results);
-          },
-          (error) => {
-            console.log('Error1:', error);
+          () => {},
+          (_ , error) => {
+            console.log('Error:', error);
           }
         );
       },
@@ -54,7 +51,6 @@ const getHabit = () => {
           [],
           (tx, results) => {
             if (results.rows.length != 0) {
-              console.log(results.rows._array);
               resolve(results.rows._array);
             } else {
               resolve([]);

@@ -13,7 +13,7 @@ import Checkbox from "expo-checkbox";
 
 const Notes = ({navigation}) => {
   const openAddWin = () => {
-    // navigation.navigate("AddToDo");
+    navigation.navigate("addNote");
   }
 
   return (

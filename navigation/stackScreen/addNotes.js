@@ -16,18 +16,20 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors, randomColor } from '../../assets/config/colors';
 import { addHabit } from '../../services/habitDB';
 
-const AddTodo = ({ navigation }) => {
-  const [title, setTitle] = useState("");
+const AddNote = ({ navigation }) => {
+  const [note, setNote] = useState({
+    title: '',
+    body: ""
+  });
 
   const goBack = () => {
     navigation.navigate('main');
   };
 
   const submitHabit = () => {
-    //add habit to database here
-
     // chack datas
-    if (title.length<3) return alert('Title must be at least 3 characters long');
+    if (note.title.length<3) return alert('Title must be at least 3 characters long');
+    if (note.body.length<3) return alert('Body must be at least 3 characters long');
     // addTodo to DB
     // fetchTodo();
     goBack()
@@ -47,7 +49,7 @@ const AddTodo = ({ navigation }) => {
         <Ionicons name="arrow-back-sharp" size={30} color="#fff" />
       </TouchableOpacity>
       <Text style={[mainStyle.header, { marginBottom: 7, marginTop: -30 }]}>
-        Add new TODO item
+        Add new note
       </Text>
 
       <ScrollView style={{ paddingHorizontal: 10, marginTop: 5 }}>
@@ -56,8 +58,19 @@ const AddTodo = ({ navigation }) => {
           <Text style={addStyle.inputTitle}>Title: </Text>
           <TextInput
             style={addStyle.singleInput}
-            value={title}
-            onChangeText={(val) => setTitle(val)}
+            value={note.title}
+            onChangeText={(val) => setNote({...note, title: val})}
+            placeholder="Read book..."
+            placeholderTextColor="#999"
+          />
+        </View>
+        <View style={addStyle.singleGroup}>
+          <Text style={addStyle.inputTitle}>Body: </Text>
+          <TextInput
+            style={addStyle.singleInput}
+            value={note.body}
+            multiline={true}
+            onChangeText={(val) => setNote({...note, body: val})}
             placeholder="Read book..."
             placeholderTextColor="#999"
           />
@@ -81,4 +94,4 @@ const AddTodo = ({ navigation }) => {
   );
 };
 
-export default AddTodo;
+export default AddNote;

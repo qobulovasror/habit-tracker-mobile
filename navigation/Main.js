@@ -15,6 +15,7 @@ import { getHabit } from '../services/habitDB';
 // srceens
 import AddHabit from './stackScreen/addHabit';
 import AddTodo from './stackScreen/addToDo';
+import AddNote from './stackScreen/addNotes';
 import ViewHabit from './stackScreen/viewHabit';
 
 import Home from './screens/home';
@@ -105,6 +106,19 @@ export default function Main() {
       >
         {(props) => (
           <AddTodo
+            {...props}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen
+        name="addNote"
+        options={{
+          title: "",
+          cardStyle: { paddingTop: 60, backgroundColor: "#272730FF" },
+        }}
+      >
+        {(props) => (
+          <AddNote
             {...props}
           />
         )}

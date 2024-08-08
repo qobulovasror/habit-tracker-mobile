@@ -13,7 +13,7 @@ import Checkbox from "expo-checkbox";
 
 const TodoList = ({navigation}) => {
   const openAddWin = () => {
-    // navigation.navigate("AddToDo");
+    navigation.navigate("addTodo");
   }
 
   return (
@@ -41,7 +41,7 @@ const TodoList = ({navigation}) => {
 const TodoItem = ({item}) => {
   return(
     <View style={{margin: 10, padding: 13, backgroundColor: '#36363FFF', borderRadius: 10, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'  }}>
-      <Text style={{fontSize: 20, color: '#fff'}}>{item.name}</Text>
+      <Text style={{fontSize: 20, color: '#fff'}}>{ ((item.status==1) && "✅  ")+ item.name}</Text>
       <View style={{display: 'flex', flexDirection: 'row'}}>
         <TouchableOpacity style={{padding: 0, marginEnd: 15}}>
           <MaterialIcons name="delete-outline" size={28} color="#f00" />

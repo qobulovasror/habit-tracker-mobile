@@ -46,5 +46,27 @@ export const addStyle = StyleSheet.create({
         borderRadius: 10,
         margin: 5,
         borderColor: "#fff"
-    }
+    },
+    singleGroup: {
+        width: "100%",
+        backgroundColor: "#34343DFF",
+        padding: 10,
+        borderRadius: 15,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between' ,
+        marginBottom: 10,
+        paddingEnd: 13,
+        paddingStart: 13
+    },
+    singleInput: {
+        fontSize: 20,
+        borderRadius: 7,
+        marginVertical: 10,
+        color: "#fff",
+        padding: 10,
+        paddingHorizontal: 10,
+        borderColor: "#fff",
+        borderWidth: 0.7,
+    },
 })

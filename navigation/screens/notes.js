@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import mainStyle from '../../assets/styles/mainStyle';
-import settingStyle from '../../assets/styles/settingStyle';
-import { FlatList, SafeAreaView, ScrollView, Text, View } from 'react-native';
-import RadioButtonGroup, { RadioButtonItem } from 'expo-radio-button';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, { useState } from "react";
 import {
-  AntDesign,
-  Feather,
-  Ionicons,
-  MaterialIcons,
-} from '@expo/vector-icons';
-import Checkbox from 'expo-checkbox';
+  SafeAreaView,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
+import mainStyle from "../../assets/styles/mainStyle";
+import { StatusBar } from "expo-status-bar";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import Checkbox from "expo-checkbox";
 
-const Notes = () => {
-  const openAddWin = () => {};
+const Notes = ({navigation}) => {
+  const openAddWin = () => {
+    // navigation.navigate("AddToDo");
+  }
+
   return (
     <SafeAreaView style={mainStyle.container}>
       <StatusBar
@@ -23,10 +24,10 @@ const Notes = () => {
         style="light"
       />
       <FlatList
-        data={[]}
-        style={{ padding: 3 }}
+        data={todoData}
+        style={{ padding: 2 }}
         renderItem={({item}) => (
-          <></> 
+          <TodoItem item={item}/>
         )}
         keyExtractor={(item) => item.id}
       />
@@ -34,116 +35,64 @@ const Notes = () => {
         <Ionicons name="ios-add-circle-outline" color={"#fff"} size={40} />
       </TouchableOpacity>
     </SafeAreaView>
-  )
-  return (
-    <SafeAreaView style={mainStyle.container}>
-      <StatusBar
-        backgroundColor="#272730"
-        barStyle={"light-content"}
-        style="light"
-      />
-      <FlatList
-        data={noteData}
-        style={{ padding: 3, borderWidth: 1, marginBottom: 0 }}
-        renderItem={({item}) => (
-          <NoteItem item={item}/>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-      <TouchableOpacity style={[mainStyle.addBtn, {top: 0}]} onPress={openAddWin}>
-        <Ionicons name="ios-add-circle-outline" color={"#fff"} size={40} />
-      </TouchableOpacity>
-    </SafeAreaView>
   );
 };
 
-const NoteItem = ({ item }) => {
-  return (<></>)
-  return (
-    <TouchableOpacity
-      style={{
-        margin: 10,
-        padding: 13,
-        backgroundColor: '#36363FFF',
-        borderRadius: 10,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-      }}
-    >
-      <Text style={{ fontSize: 20, color: '#fff' }}>{item.name}</Text>
-      <View style={{ display: 'flex', flexDirection: 'row' }}>
-        <TouchableOpacity style={{ padding: 0, marginEnd: 15 }}>
-          <MaterialIcons name="delete-outline" size={28} color="#f00" />
-        </TouchableOpacity>
-        <TouchableOpacity style={{ padding: 0, marginStart: 15 }}>
-          <Ionicons name="open-outline" size={24} color="#fff" />
-        </TouchableOpacity>
+const TodoItem = ({item}) => {
+  return(
+    <View style={{margin: 10, padding: 13, backgroundColor: '#36363FFF', borderRadius: 10}}>
+      <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'  }}>
+        <Text style={{fontSize: 20, color: '#fff'}}>{item.name}</Text>
+        <View style={{display: 'flex', flexDirection: 'row'}}>
+          <TouchableOpacity style={{padding: 0, marginEnd: 15}}>
+            <MaterialIcons name="delete-outline" size={28} color="#f00" />
+          </TouchableOpacity>
+          <TouchableOpacity style={{ padding: 0, marginStart: 15 }}>
+            <Ionicons name="open-outline" size={24} color="#fff" />
+          </TouchableOpacity>
+        </View>
       </View>
-    </TouchableOpacity>
-  );
-};
+      <Text style={{color: '#9C9C9DFF', marginVertical: 5}}>{(item.body.length>203)? item.body.slice(0, 200)+"...": item.body}</Text>
+    </View>
+  )
+}
 
-const noteData = [
+const todoData = [
   {
     id: 1,
     name: "O'qish",
+    body: "sasfdfs sdfsdsc sxas"
   },
   {
     id: 2,
-    name: 'Dars',
-    status: false,
+    name: "Dars",
+    body: "sasfdfs sdfsdsc sxas"
   },
   {
     id: 3,
     name: "O'qish",
-    status: 0,
+    body: "sasfdfs sdfsdsc s"
   },
   {
     id: 4,
     name: "O'qish 3",
-    status: 0,
-  },
-  {
-    id: 5,
-    name: "O'qish",
-    status: 0,
-  },
-  {
-    id: 6,
-    name: "O'qish 3",
-    status: 0,
-  },
-  {
-    id: 7,
-    name: "O'qish",
-    status: 0,
-  },
-  {
-    id: 445,
-    name: "O'qish 3",
-    status: 0,
-  },
-  {
-    id: 33,
-    name: "O'qish",
-    status: 0,
+    body: "sasfdfs sdfsdsc sxas"
   },
   {
     id: 42,
     name: "O'qish 3",
-    status: 0,
+    body: "sasfdfs sdfsdsc sxas"
   },
   {
-    id: 323,
-    name: "O'qish",
-    status: 0,
+    id: 43,
+    name: "O'qish 3",
+    body: "sasfdfs sdfsdsc sxas"
   },
-  {
-    id: 4423,
-    name: "O'qish 31",
-    status: 0,
-  },
-];
+]
+
 
 export default Notes;
+
+
+
+//I will edit add btn  

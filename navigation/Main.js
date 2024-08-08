@@ -13,7 +13,8 @@ import {
 import { getHabit } from '../services/habitDB';
 
 // srceens
-import Add from './stackScreen/add';
+import AddHabit from './stackScreen/addHabit';
+import AddTodo from './stackScreen/addToDo';
 import ViewHabit from './stackScreen/viewHabit';
 
 import Home from './screens/home';
@@ -87,7 +88,7 @@ export default function Main() {
         }}
       >
         {(props) => (
-          <Add
+          <AddHabit
             {...props}
             selectHabit={selectHabit}
             setSelectHabit={setSelectHabit}
@@ -95,22 +96,19 @@ export default function Main() {
           />
         )}
       </Stack.Screen>
-      {/* <Stack.Screen
-        name="viewHabit"
+      <Stack.Screen
+        name="addTodo"
         options={{
           title: "",
           cardStyle: { paddingTop: 60, backgroundColor: "#272730FF" },
         }}
       >
         {(props) => (
-          <ViewHabit
+          <AddTodo
             {...props}
-            selectHabit={selectHabit}
-            setSelectHabit={setSelectHabit}
-            fetchHabits={fetchHabits}
           />
         )}
-      </Stack.Screen> */}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }

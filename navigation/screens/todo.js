@@ -2,20 +2,13 @@ import React, { useState } from "react";
 import {
   SafeAreaView,
   Text,
-  TextInput,
   View,
   TouchableOpacity,
-  ScrollView,
   FlatList,
 } from "react-native";
 import mainStyle from "../../assets/styles/mainStyle";
 import { StatusBar } from "expo-status-bar";
-import { addStyle } from "../../assets/styles/addStyle";
-import { AntDesign, MaterialIcons, Ionicons } from "@expo/vector-icons";
-import { Switch } from "react-native-paper";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import {colors, randomColor} from '../../assets/config/colors'
-import { addHabit } from "../../services/habitDB";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 
 const TodoList = ({navigation}) => {
@@ -31,8 +24,8 @@ const TodoList = ({navigation}) => {
         style="light"
       />
       <FlatList
-        data={[todoData]}
-        style={{ padding: 3 }}
+        data={todoData}
+        style={{ paddingBottom: 80 }}
         renderItem={({item}) => (
           <TodoItem item={item}/>
         )}
@@ -94,22 +87,11 @@ const todoData = [
     name: "O'qish 3",
     status: 0
   },
-  {
-    id: 422,
-    name: "O'qish 3",
-    status: 0
-  },
-  {
-    id: 423422,
-    name: "O'qish 3",
-    status: 0
-  },
-  {
-    id: 443,
-    name: "O'qish 3",
-    status: 0
-  },
 ]
 
 
 export default TodoList;
+
+
+
+//I will edit add btn  

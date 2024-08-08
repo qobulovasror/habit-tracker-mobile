@@ -16,7 +16,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import {colors, randomColor} from '../../assets/config/colors'
 import { addHabit } from "../../services/habitDB";
 
-const Add = ({fetchHabits, navigation}) => {
+const AddTodo = ({fetchHabits, navigation}) => {
   const [habit, setHabit] = useState({
     name: "",
     frequency: 7,
@@ -234,4 +234,4 @@ const Add = ({fetchHabits, navigation}) => {
 
 
 
-export default Add;
+export default AddTodo;

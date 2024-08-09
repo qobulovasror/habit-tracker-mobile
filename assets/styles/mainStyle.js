@@ -19,7 +19,11 @@ const mainStyle = StyleSheet.create({
     },
     column: {
         display: 'flex',
-        flexDirection: "column"
+        flexDirection: "column",
+        borderRadius: 5,
+        borderWidth: 0.8,
+        padding: 5,
+        width: '13%'
     },
     between: {
         justifyContent: 'space-between'
@@ -27,7 +31,18 @@ const mainStyle = StyleSheet.create({
     around: {
         justifyContent: 'space-around'
     },
-    
+    addBtn: {
+        position: 'absolute',
+        bottom: '3%',
+        right: '3%',
+        padding: 10,
+        backgroundColor: '#00f',
+        borderRadius: 14
+    },
+    goBack: {
+        paddingStart: 10,
+        margin: 0
+    },
 })
 
 export default mainStyle;

@@ -2,10 +2,10 @@ import { StyleSheet } from "react-native";
 
 const homeStyle = StyleSheet.create({
     listItem: {
-        padding: 15,
-        borderRadius: 17,
+        padding: 6,
+        borderRadius: 10,
         backgroundColor: "#34343DFF",
-        marginVertical: 10,
+        marginVertical: 2,
         marginHorizontal: 5
     },
     itemTitle: {
@@ -24,7 +24,6 @@ const homeStyle = StyleSheet.create({
     weekTitle: {
         fontSize: 17,
         textAlign: 'center',
-        marginBottom: 3,
         color: "#ADADB9FF"
     },
     weekNum: {
@@ -35,6 +34,16 @@ const homeStyle = StyleSheet.create({
         paddingVertical: 8,
         borderWidth: 1.5,
         borderColor: "#00f"
+    },
+    itemText: {
+        color: '#d5d4d4', 
+        fontSize: 16,
+    },
+    itemBtn: {
+        padding: 8, 
+        height: 43, 
+        backgroundColor: "#555555", 
+        borderRadius: 8
     }
 })
 

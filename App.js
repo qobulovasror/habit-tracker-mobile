@@ -1,13 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import Main from './navigation/Main';
-import 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
-import {createHabitTable} from './services/habitDB';
+import createTables from './services/initialTables';
 
 export default function App() {
   const [initialized, setInitialized] = useState(false);
   const createDbTables = () => {
-    createHabitTable()
+    createTables()
   }
   
   useEffect(() => {

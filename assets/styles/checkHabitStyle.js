@@ -4,7 +4,7 @@ const checkHabitStyle = StyleSheet.create({
     listItem: {
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderRadius: 17,
+        borderRadius: 15,
         backgroundColor: "#34343DFF",
         marginVertical: 7,
         marginHorizontal: 5

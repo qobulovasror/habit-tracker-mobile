@@ -21,6 +21,21 @@ const createHabitTable = () => {
   });
 };
 
+const createHabitTrackerTable = () => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS tracker (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        habitId INTEGER NOT NULL,
+        createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );`,
+      [],
+      ()=>{},
+      (_, error) => console.log(error)
+    );
+  });
+};
+
 const createTodoTable = () => {
   db.transaction((tx) => {
     db.transaction((tx) => {
@@ -54,6 +69,7 @@ const createNoteTable = () => {
 const createTables = () => {
   try {
     createHabitTable();
+    createHabitTrackerTable();
     createTodoTable();
     createNoteTable();
   } catch (error) {

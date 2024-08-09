@@ -73,16 +73,18 @@ const updateHabit = (
   id,
   name,
   frequency,
+  amount,
+  amountType,
+  change,
   reminderActive,
   reminderTime,
-  description,
   color
 ) => {
   try {
     db.transaction((tx) => {
       tx.executeSql(
-        'UPDATE habit SET name=?, frequency=?, reminderActive=?, reminderTime=?, description=?, color=?  WHERE id =?;',
-        [name, frequency, reminderActive, reminderTime, description, color, id]
+        'UPDATE habit SET name=?, frequency=?, amount=?, amountType=?, change=?, reminderActive=?, reminderTime=?, color=?  WHERE id =?;',
+        [name, frequency, amount, amountType, change, reminderActive, Math.floor(new Date(reminderTime).getTime() / 1000), color, id]
       );
     });
   } catch (error) {
@@ -109,7 +111,6 @@ const deleteHabit = (id) => {
           [Number(id)],
           (tx, results) => {
             if (results.rows.length != 0) {
-              console.log(results.rows.length);
               resolve(results.rows._array);
             } else {
               resolve([]);

@@ -14,6 +14,7 @@ import {deleteNote} from "../../services/noteDB"
 
 const Notes = ({ navigation, notes, fetchNotes, setTargetNote }) => {
   const openAddWin = () => {
+    setTargetNote(null);
     navigation.navigate('addNote');
   };
 
@@ -31,7 +32,7 @@ const Notes = ({ navigation, notes, fetchNotes, setTargetNote }) => {
           item={item} 
           fetchNotes={fetchNotes} 
           setTargetNote={setTargetNote}
-          openAddWin={openAddWin}
+          navigation={navigation}
         />}
         keyExtractor={(item) => item.id}
       />
@@ -42,7 +43,7 @@ const Notes = ({ navigation, notes, fetchNotes, setTargetNote }) => {
   );
 };
 
-const TodoItem = ({ item, fetchNotes, setTargetNote, openAddWin }) => {
+const TodoItem = ({ item, fetchNotes, setTargetNote, navigation }) => {
   const deleteItem = (id) => {
     Alert.alert(
       'Confirm Action',
@@ -66,7 +67,7 @@ const TodoItem = ({ item, fetchNotes, setTargetNote, openAddWin }) => {
 
   const openTargetNote = (item) => {
     setTargetNote(item)
-    openAddWin()
+    navigation.navigate('addNote');
   }
   return (
     <View

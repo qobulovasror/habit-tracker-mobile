@@ -4,15 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {
   Feather,
   AntDesign,
-  Ionicons,
   Octicons,
   MaterialCommunityIcons,
-  FontAwesome5,
   FontAwesome,
 } from '@expo/vector-icons';
 import { getHabit } from '../services/habitDB';
 import { getTodos } from '../services/todoDB';
 import { getNotes } from '../services/noteDB';
+import { getTodayTrackers } from '../services/trackerDB';
 
 // srceens
 import AddHabit from './stackScreen/addHabit';
@@ -33,28 +32,16 @@ export default function Main() {
   const [habits, setHabits] = useState('');
   const [todos, setTodos] = useState('');
   const [notes, setNotes] = useState('');
+  // const [tracks, setTrack] = useState('');
+  const [todaysTracks, setTodaysTracks] = useState('');
 
   const [targetNote, setTargetNote] = useState(null)
-
-  const [selectHabit, setSelectHabit] = useState({
-    amount: 2,
-    amountType: 'sdfsdf',
-    change: 1,
-    color: '08A34FFF',
-    createdAt: '2024-01-02 11:12:01',
-    description: 'sdfsdf',
-    frequency: 7,
-    id: 1,
-    name: 'ghgsfdf',
-    reminderActive: 0,
-    reminderTime: '',
-  });
+  const [selectHabit, setSelectHabit] = useState(null);
 
   const fetchHabits = async () => {
     try {
       getHabit().then((data) => {
         if (data) {
-          console.log(data);
           setHabits(data);
         }
       });
@@ -73,7 +60,6 @@ export default function Main() {
       console.log(error);
     }
   };
-
   const fetchNotes = async () => {
     try {
       getNotes().then((data) => {
@@ -86,10 +72,25 @@ export default function Main() {
     }
   };
 
+  const fetchTrackers = async () => {
+    try {
+      getTodayTrackers().then((data) => {
+        if (data) {
+          console.log(data);
+          
+          setTodaysTracks(data);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchHabits();
     fetchTodos();
     fetchNotes();
+    fetchTrackers()
   }, []);
   return (
     <Stack.Navigator
@@ -118,7 +119,11 @@ export default function Main() {
 
             habits={habits}
             setHabits={setHabits}
+            setSelectHabit={setSelectHabit}
             fetchHabits={fetchHabits}
+
+            todaysTracks={todaysTracks}
+            fetchTrackers={fetchTrackers}
           />
         )}
       </Stack.Screen>
@@ -177,9 +182,10 @@ export default function Main() {
 
 const TabNavigationHadler = (props) => {
   const { 
-    habits, fetchHabits,
+    habits, fetchHabits, setSelectHabit,
     todos, fetchTodos, setTargetNote,
-    notes, fetchNotes 
+    notes, fetchNotes,
+    todaysTracks, fetchTrackers,
   } = props;
   return (
     <Tab.Navigator
@@ -201,7 +207,14 @@ const TabNavigationHadler = (props) => {
         }}
       >
         {(props) => (
-          <Home {...props} habits={habits} fetchHabits={fetchHabits} />
+          <Home 
+            {...props} 
+            habits={habits} 
+            fetchHabits={fetchHabits} 
+            setSelectHabit={setSelectHabit} 
+            todaysTracks={todaysTracks}
+            fetchTrackers={fetchTrackers}
+          />
         )}
       </Tab.Screen>
       <Tab.Screen

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -14,9 +14,9 @@ import { AntDesign, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { Switch } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors, randomColor } from '../../assets/config/colors';
-import { addHabit } from '../../services/habitDB';
+import { addHabit, updateHabit } from '../../services/habitDB';
 
-const AddHabit = ({ fetchHabits, navigation }) => {
+const AddHabit = ({ fetchHabits, navigation, selectHabit, setSelectHabit }) => {
   const [habit, setHabit] = useState({
     name: '',
     frequency: 7,
@@ -62,16 +62,30 @@ const AddHabit = ({ fetchHabits, navigation }) => {
   const submitHabit = () => {
     // chack datas
     if (!habit.name) return alert('Name is required');
-    addHabit(
-      habit.name,
-      habit.frequency,
-      habit.amount,
-      habit.amountType,
-      habit.change,
-      habit.reminder.active ? 1 : 0,
-      habit.reminder.time,
-      habit.color
-    );
+    if(!selectHabit){
+      addHabit(
+        habit.name,
+        habit.frequency,
+        habit.amount,
+        habit.amountType,
+        habit.change,
+        habit.reminder.active ? 1 : 0,
+        habit.reminder.time,
+        habit.color
+      );
+    }else{
+      updateHabit(
+        selectHabit.id,
+        habit.name,
+        habit.frequency,
+        habit.amount,
+        habit.amountType,
+        habit.change,
+        habit.reminder.active,
+        habit.reminder.time,
+        habit.color,
+      )
+    }
 
     fetchHabits();
     setHabit({
@@ -91,6 +105,23 @@ const AddHabit = ({ fetchHabits, navigation }) => {
     goBack()
   };
 
+  useEffect(()=>{
+    if (!!selectHabit){
+      setHabit({
+        name: selectHabit.name,
+        frequency: selectHabit.frequency,
+        amount: selectHabit.amount,
+        amountType: selectHabit.amountType,
+        change: selectHabit.change,
+        reminder: {
+          time: new Date(selectHabit.reminderTime),
+          active: (selectHabit.reminderActive==1),
+        },
+        color: selectHabit.color,
+      });
+    }
+  }, [])
+
   return (
     <SafeAreaView style={mainStyle.container}>
       <StatusBar
@@ -105,7 +136,7 @@ const AddHabit = ({ fetchHabits, navigation }) => {
         <Ionicons name="arrow-back-sharp" size={30} color="#fff" />
       </TouchableOpacity>
       <Text style={[mainStyle.header, { marginBottom: 7, marginTop: -30 }]}>
-        Add new habit
+        {(!!selectHabit)? "Edit habit": "Add new habit"}
       </Text>
 
       <ScrollView style={{ paddingHorizontal: 10, marginTop: 5 }}>

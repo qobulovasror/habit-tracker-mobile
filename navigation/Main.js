@@ -7,11 +7,12 @@ import {
   Octicons,
   MaterialCommunityIcons,
   FontAwesome,
+  Ionicons,
 } from '@expo/vector-icons';
 import { getHabit } from '../services/habitDB';
 import { getTodos } from '../services/todoDB';
 import { getNotes } from '../services/noteDB';
-import { getTodayTrackers } from '../services/trackerDB';
+import { getTodayTrackers, getTrackers } from '../services/trackerDB';
 
 // srceens
 import AddHabit from './stackScreen/addHabit';
@@ -29,14 +30,15 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function Main() {
-  const [habits, setHabits] = useState('');
-  const [todos, setTodos] = useState('');
-  const [notes, setNotes] = useState('');
-  // const [tracks, setTrack] = useState('');
-  const [todaysTracks, setTodaysTracks] = useState('');
+  const [habits, setHabits] = useState([]);
+  const [todos, setTodos] = useState([]);
+  const [notes, setNotes] = useState([]);
+  const [tracks, setTrack] = useState([]);
+  const [todaysTracks, setTodaysTracks] = useState([]);
 
   const [targetNote, setTargetNote] = useState(null)
   const [selectHabit, setSelectHabit] = useState(null);
+  const [viewSelectHabit, setViewSelectHabit] = useState(null);
 
   const fetchHabits = async () => {
     try {
@@ -76,11 +78,14 @@ export default function Main() {
     try {
       getTodayTrackers().then((data) => {
         if (data) {
-          console.log(data);
-          
           setTodaysTracks(data);
         }
       });
+      getTrackers().then(data=>{
+        if(data){
+          setTrack(data)
+        }
+      })
     } catch (error) {
       console.log(error);
     }
@@ -121,6 +126,7 @@ export default function Main() {
             setHabits={setHabits}
             setSelectHabit={setSelectHabit}
             fetchHabits={fetchHabits}
+            setViewSelectHabit={setViewSelectHabit}
 
             todaysTracks={todaysTracks}
             fetchTrackers={fetchTrackers}
@@ -176,20 +182,40 @@ export default function Main() {
           />
         )}
       </Stack.Screen>
+      {/* view habit screen */}
+      <Stack.Screen
+        name="viewHabit"
+        options={{
+          title: "",
+          cardStyle: { paddingTop: 60, backgroundColor: "#272730FF" },
+        }}
+      >
+        {(props) => (
+          <ViewHabit
+            {...props}
+            tracks={tracks}
+            viewSelectHabit={viewSelectHabit}
+            setViewSelectHabit={setViewSelectHabit}
+            fetchHabits={fetchHabits}
+            fetchTrackers={fetchTrackers}
+          />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }
 
 const TabNavigationHadler = (props) => {
   const { 
-    habits, fetchHabits, setSelectHabit,
+    habits, fetchHabits, setSelectHabit, setViewSelectHabit,
     todos, fetchTodos, setTargetNote,
     notes, fetchNotes,
     todaysTracks, fetchTrackers,
   } = props;
   return (
     <Tab.Navigator
-      initialRouteName="Habits"
+      // initialRouteName="Today's habits"
+      initialRouteName="All habits"
       screenOptions={{
         headerTintColor: '#fff',
         headerTitleStyle: { fontSize: 28 },
@@ -218,16 +244,21 @@ const TabNavigationHadler = (props) => {
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="Habit statistics"
+        name="All habits"
         options={{
           tabBarLabel: '', //"Today's habit",
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="bar-chart" size={size + 2} color={color} />
+            <FontAwesome name="list" size={size + 2} color={color} />
           ),
         }}
       >
         {(props) => (
-          <CheckHabit {...props} habits={habits} fetchHabits={fetchHabits} />
+          <CheckHabit 
+            {...props} 
+            habits={habits} 
+            fetchHabits={fetchHabits}
+            setViewSelectHabit={setViewSelectHabit}
+          />
         )}
       </Tab.Screen>
       <Tab.Screen

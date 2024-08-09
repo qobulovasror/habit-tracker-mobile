@@ -93,4 +93,19 @@ const deleteTracker = (id) => {
   }
 };
 
-export { addTracker, getTrackers, getTodayTrackers, deleteTracker };
+const deleteTrackersByHabitId = (habitId) => {
+  try {
+    db.transaction(
+      (tx) => {
+        tx.executeSql('DELETE FROM tracker WHERE habitId=?', [habitId]);
+      },
+      (error) => console.log(error),
+      () => {}
+    );
+  } catch (error) {
+    console.log(error);
+    alert(error)
+  }
+};
+
+export { addTracker, getTrackers, getTodayTrackers, deleteTracker, deleteTrackersByHabitId };

@@ -45,5 +45,21 @@ export const viewSelectedHabitStyle = StyleSheet.create({
         borderRadius: 10,
         margin: 5,
         borderColor: "#fff"
-    }
+    },
+    clearBtn: {
+        padding: 10,
+        backgroundColor: "#f00",
+        borderRadius: 10,
+        margin: 5,
+    },
+    swapBtn: {
+        padding: 10,
+        backgroundColor: "#43434DFF",
+        borderRadius: 10,
+        margin: 5,
+    },
+    btnText: {
+        color: "#fff",
+        fontSize: 16
+    },
 })

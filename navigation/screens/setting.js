@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import mainStyle from '../../assets/styles/mainStyle';
 import settingStyle from '../../assets/styles/settingStyle';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
-import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 

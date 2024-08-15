@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import {
   LineChart,
-  ContributionGraph,
 } from "react-native-chart-kit";
 import mainStyle from "../../assets/styles/mainStyle";
 import { StatusBar } from "expo-status-bar";
@@ -21,7 +20,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { Dimensions } from "react-native";
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import {Calendar} from 'react-native-calendars';
 // import ToastManager, { Toast } from 'toastify-react-native'
 
 import { deleteHabit } from "../../services/habitDB";

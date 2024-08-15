@@ -10,10 +10,7 @@ import {
 import mainStyle from '../../assets/styles/mainStyle';
 import { StatusBar } from 'expo-status-bar';
 import { addStyle } from '../../assets/styles/addStyle';
-import { AntDesign, MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { Switch } from 'react-native-paper';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { colors, randomColor } from '../../assets/config/colors';
+import { Ionicons } from '@expo/vector-icons';
 import { addNote, updateNote } from '../../services/noteDB';
 
 const AddNote = ({ navigation, fetchNotes, targetNote, setTargetNote }) => {

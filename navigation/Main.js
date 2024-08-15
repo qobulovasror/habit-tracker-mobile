@@ -7,7 +7,6 @@ import {
   Octicons,
   MaterialCommunityIcons,
   FontAwesome,
-  Ionicons,
 } from '@expo/vector-icons';
 import { getHabit } from '../services/habitDB';
 import { getTodos } from '../services/todoDB';

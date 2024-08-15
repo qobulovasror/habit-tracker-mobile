@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -8,10 +7,8 @@ import {
   StatusBar,
 } from 'react-native';
 import homeStyle from '../../assets/styles/homeStyle';
-import { SelectList } from 'react-native-dropdown-select-list';
 import mainStyle from '../../assets/styles/mainStyle';
-import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
-import Checkbox from 'expo-checkbox';
+import { Ionicons } from '@expo/vector-icons';
 import checkHabitStyle from '../../assets/styles/checkHabitStyle';
 
 const CheckHabit = (props) => {

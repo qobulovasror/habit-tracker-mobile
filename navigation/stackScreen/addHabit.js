@@ -6,12 +6,12 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Switch,
 } from 'react-native';
 import mainStyle from '../../assets/styles/mainStyle';
 import { StatusBar } from 'expo-status-bar';
 import { addStyle } from '../../assets/styles/addStyle';
 import { AntDesign, MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { Switch } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors, randomColor } from '../../assets/config/colors';
 import { addHabit, updateHabit } from '../../services/habitDB';

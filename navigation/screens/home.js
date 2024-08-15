@@ -47,7 +47,7 @@ export default function Home(props) {
     );
   };
 
-  const todaysHabit = habits?.filter((i) => {
+  const todaysHabit = habits?.filter((i) => {  
     if (
       Number(i.frequency) >= new Date().getDay() &&
       !todaysTracks.includes(i.id)

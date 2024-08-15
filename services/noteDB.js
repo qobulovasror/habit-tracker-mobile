@@ -20,7 +20,7 @@ const getNotes = () => {
     try {
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM note',
+          "SELECT * FROM note",
           [],
           (tx, results) => {
             if (results.rows.length != 0) {
@@ -29,14 +29,14 @@ const getNotes = () => {
               resolve([]);
             }
           },
-          (error) => {
+          (tx, error) => {
             console.log(error);
             reject(error);
           }
         );
       });
     } catch (error) {
-      alert(error);
+      reject(error);
     }
   });
 };

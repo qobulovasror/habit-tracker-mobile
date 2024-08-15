@@ -46,7 +46,7 @@ export default function Main() {
         if (data) {
           setHabits(data);
         }
-      });
+      }).catch(ex=>console.log(ex));
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +57,7 @@ export default function Main() {
         if (data) {
           setTodos(data);
         }
-      });
+      }).catch(ex=>console.log(ex));
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +68,7 @@ export default function Main() {
         if (data) {
           setNotes(data);
         }
-      });
+      }).catch(ex=>console.log(ex));
     } catch (error) {
       console.log(error);
     }
@@ -80,23 +80,30 @@ export default function Main() {
         if (data) {
           setTodaysTracks(data);
         }
+      }).catch(ex=>{
+        console.log(ex);
       });
       getTrackers().then(data=>{
         if(data){
           setTrack(data)
         }
-      })
+      }).catch(ex=>console.log(ex));
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchHabits();
-    fetchTodos();
-    fetchNotes();
-    fetchTrackers()
+    const timer = setTimeout(() => {
+      fetchHabits();
+      fetchTodos();
+      fetchNotes();
+      fetchTrackers()
+    }, 3000); // 5000ms = 5 seconds
+
+    return () => clearTimeout(timer);
   }, []);
+
   return (
     <Stack.Navigator
       initialRouteName="main"

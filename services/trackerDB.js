@@ -20,23 +20,26 @@ const getTrackers = () => {
     try {
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM tracker',
+          "SELECT * FROM tracker",
           [],
           (tx, results) => {
-            if (results.rows.length != 0) {
+            if (results.rows.length > 0) {
               resolve(results.rows._array);
             } else {
               resolve([]);
             }
           },
-          (error) => {
-            console.log(error);
+          (tx, error) => {
             reject(error);
           }
         );
+      }, (error) => {
+        console.error('Transaction error:', error);
+        reject(error);
       });
     } catch (error) {
-      alert(error);
+      console.error('Unexpected error:', error);
+      reject(error);
     }
   });
 };
@@ -46,7 +49,7 @@ const getTodayTrackers = () => {
     try {
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM tracker',
+          "SELECT * FROM tracker",
           [],
           (tx, results) => {
             if (results.rows.length != 0) {
@@ -65,14 +68,14 @@ const getTodayTrackers = () => {
               resolve([]);
             }
           },
-          (error) => {
+          (tx, error) => {
             console.log(error);
             reject(error);
           }
         );
       });
     } catch (error) {
-      alert(error);
+      reject(error);
     }
   });
 };

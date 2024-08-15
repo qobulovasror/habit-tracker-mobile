@@ -11,7 +11,7 @@ const addTodo = (name, status) => {
       );
     });
   } catch (error) {
-    alert(error)
+    alert(error);
   }
 };
 
@@ -20,7 +20,7 @@ const getTodos = () => {
     try {
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT id, name, status FROM todo',
+          "SELECT id, name, status FROM todo",
           [],
           (tx, results) => {
             if (results.rows.length != 0) {
@@ -29,10 +29,13 @@ const getTodos = () => {
               resolve([]);
             }
           },
-          (error) => {
+          (tx, error) => {
             reject(error);
           }
         );
+      }, (error)=>{
+        console.log(error);
+        reject(error);
       });
     } catch (error) {
       reject(error);
@@ -43,11 +46,15 @@ const getTodos = () => {
 const changeStatus = (id, status) => {
   try {
     db.transaction((tx) => {
-      tx.executeSql('UPDATE todo SET status=? WHERE id =?;', [
-        status,
-        id,
-      ]);
-    });
+      tx.executeSql(
+        'UPDATE todo SET status=? WHERE id =?;',
+        [status, id],
+        () => {},
+        (tx, error) => {
+          console.log(error);
+        }
+      );
+    }, (error)=>console.log(error));
   } catch (error) {
     alert(error);
   }
@@ -57,14 +64,17 @@ const deleteTodo = (id) => {
   try {
     db.transaction(
       (tx) => {
-        tx.executeSql('DELETE FROM todo WHERE id=?', [id]);
+        tx.executeSql('DELETE FROM todo WHERE id=?', 
+          [id],
+          ()=>{},
+          (error)=>{console.log(error)}
+        );
       },
       (error) => console.log(error),
-      () => {}
     );
   } catch (error) {
     console.log(error);
-    alert(error)
+    alert(error);
   }
 };
 

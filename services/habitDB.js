@@ -47,7 +47,7 @@ const getHabit = () => {
     try {
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM habit',
+          "SELECT * FROM habit",
           [],
           (tx, results) => {
             if (results.rows.length != 0) {
@@ -56,11 +56,14 @@ const getHabit = () => {
               resolve([]);
             }
           },
-          (error) => {
+          (tx, error) => {
             console.log('err from DB file1:', error);
             reject(error);
           }
         );
+      }, (error)=>{
+        reject(error);
+        console.log(error)
       });
     } catch (error) {
       console.log('err from DB file:', error);
@@ -84,9 +87,13 @@ const updateHabit = (
     db.transaction((tx) => {
       tx.executeSql(
         'UPDATE habit SET name=?, frequency=?, amount=?, amountType=?, change=?, reminderActive=?, reminderTime=?, color=?  WHERE id =?;',
-        [name, frequency, amount, amountType, change, reminderActive, Math.floor(new Date(reminderTime).getTime() / 1000), color, id]
+        [name, frequency, amount, amountType, change, reminderActive, Math.floor(new Date(reminderTime).getTime() / 1000), color, id],
+        () => {},
+        (tx, error) => {
+          console.log(error);
+        }
       );
-    });
+    }, (error)=>console.log(error));
   } catch (error) {
     alert(error);
   }
@@ -116,7 +123,7 @@ const deleteHabit = (id) => {
               resolve([]);
             }
           },
-          (error) => {
+          (_, error) => {
             console.log('err from DB file1:', error);
             reject(error);
           }

@@ -31,8 +31,16 @@ const screenWidth = Dimensions.get("window").width;
 
 
 const ViewHabit = (props) => {
-  const {navigation, tracks, viewSelectHabit, setViewSelectHabit, fetchHabits, fetchTrackers} = props
-  const [statisticPeriod, setStatisticPeriod] = useState('month') 
+  const {
+    navigation, 
+    tracks, 
+    viewSelectHabit, 
+    setViewSelectHabit, 
+    fetchHabits, 
+    fetchTrackers
+  } = props
+
+  const [statisticPeriod, setStatisticPeriod] = useState(5) 
 
   const deleteHabitHandler = () => {
     Alert.alert(
@@ -79,7 +87,7 @@ const ViewHabit = (props) => {
       { cancelable: true }
     );
   }
-
+  
   const goBack = () => {
     navigation.navigate('main')
     setViewSelectHabit(null)
@@ -95,6 +103,14 @@ const ViewHabit = (props) => {
     marketCalendarData[itemDate.toISOString().split('T')[0].toString()] = {selected: true, marked: true, selectedColor: 'blue'}
     // '2024-08-10': {selected: true, marked: true, selectedColor: 'blue'}
   });
+
+  const statisticData = Array(statisticPeriod).fill(0)
+  const months = getLastMonth(statisticPeriod)
+  habitTracks.forEach(element => {
+    let itemDate = new Date(element.createAt)
+    const itemMonth = itemDate.toLocaleString('default', { month: 'short' });   
+    ++statisticData[months.indexOf(itemMonth)];
+  })
 
   return (
     <SafeAreaView style={[mainStyle.container]}>
@@ -200,34 +216,56 @@ const ViewHabit = (props) => {
         </View>
 
         {/* Statistic */}
-        {/* <View style={[mainStyle.row, mainStyle.between]}>
+        <View style={[mainStyle.row, mainStyle.between]}>
           <Text style={[viewSelectedHabitStyle.inputTitle, {fontSize: 21, paddingVertical: 5}]}>Statistic </Text>
           <View style={[mainStyle.row]}>
             <TouchableOpacity
-              onPress={()=>setStatisticPeriod("month")}
-              style={[viewSelectedHabitStyle.swapBtn, {backgroundColor: (statisticPeriod=="month")? "#00f": "#43434DFF"}]}
+              onPress={()=>setStatisticPeriod(3)}
+              style={[viewSelectedHabitStyle.swapBtn, {backgroundColor: (statisticPeriod==3)? "#00f": "#43434DFF"}]}
             >
-              <Text style={viewSelectedHabitStyle.btnText}>Last month</Text>
+              <Text style={[viewSelectedHabitStyle.btnText, {marginHorizontal: 7}]}>3</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={()=>setStatisticPeriod("all")}
-              style={[viewSelectedHabitStyle.swapBtn, {backgroundColor: statisticPeriod!="month"? "#00f": "#43434DFF"}]}
-              >
-              <Text style={viewSelectedHabitStyle.btnText}>All period</Text>
+              onPress={()=>setStatisticPeriod(5)}
+              style={[viewSelectedHabitStyle.swapBtn, {backgroundColor: (statisticPeriod==5)? "#00f": "#43434DFF"}]}
+            >
+              <Text style={[viewSelectedHabitStyle.btnText, {marginHorizontal: 7}]}>5</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={()=>setStatisticPeriod(7)}
+              style={[viewSelectedHabitStyle.swapBtn, {backgroundColor: (statisticPeriod==7)? "#00f": "#43434DFF"}]}
+            >
+              <Text style={[viewSelectedHabitStyle.btnText, {marginHorizontal: 7}]}>7</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={()=>setStatisticPeriod(10)}
+              style={[viewSelectedHabitStyle.swapBtn, {backgroundColor: (statisticPeriod==10)? "#00f": "#43434DFF"}]}
+            >
+              <Text style={[viewSelectedHabitStyle.btnText, {marginHorizontal: 7}]}>10</Text>
             </TouchableOpacity>
 
           </View>
         </View>
         <View style={[viewSelectedHabitStyle.catGroup, {paddingHorizontal: 10}]}>
           <LineChart
-            data={data}
+            data={{
+              labels: months,
+              datasets: [
+                {
+                  data: statisticData,
+                  color: (opacity = 1) => `rgba(27,49,244, ${opacity})`, // optional
+                  strokeWidth: 2 // optional
+                }
+              ],
+              legend: [`Last ${statisticPeriod} month's statistics`] 
+            }}
             width={screenWidth-40}
             height={230}
             verticalLabelRotation={10}
             chartConfig={chartConfig}
             bezier
           />
-        </View> */}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -236,25 +274,25 @@ const ViewHabit = (props) => {
 export default ViewHabit;
 
 
-const data = {
-  labels: ["January", "February", "March", "April", "May", "June"],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43],
-      color: (opacity = 1) => `rgba(27,49,244, ${opacity})`, // optional
-      strokeWidth: 2 // optional
-    }
-  ],
-  legend: ["Last month's statistics"] 
-};
-
 const chartConfig = {
   backgroundGradientFrom: "#1E2923",
-  backgroundGradientFromOpacity: 0,
+  backgroundGradientFromOpacity: 0.3,
   backgroundGradientTo: "#08130D",
-  backgroundGradientToOpacity: 0.5,
+  backgroundGradientToOpacity: 0.7,
   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-  strokeWidth: 2, // optional, default 3
+  strokeWidth: 3, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false // optional
 };
+
+const getLastMonth = (len=5) => {
+  const months = [];
+  const currentDate = new Date();
+
+  for (let i = 0; i < len; i++) {
+    const month = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+    const monthName = month.toLocaleString('default', { month: 'short' }); 
+    months.push(monthName);
+  }
+  return months.reverse()
+}

@@ -45,7 +45,9 @@ const createTodoTable = () => {
           name TEXT NOT NULL,
           status INTEGER
       );`,
-        []
+        [],
+        ()=>{},
+        (_, error) => console.log(error)
       );
     });
   });

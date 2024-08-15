@@ -53,7 +53,7 @@ export const viewSelectedHabitStyle = StyleSheet.create({
         margin: 5,
     },
     swapBtn: {
-        padding: 10,
+        padding: 8,
         backgroundColor: "#43434DFF",
         borderRadius: 10,
         margin: 5,

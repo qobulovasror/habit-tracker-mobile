@@ -21,6 +21,7 @@ export default function Home(props) {
   const { navigation, habits, setSelectHabit, fetchHabits, todaysTracks, fetchTrackers } =
     props;
   const openAddWin = () => {
+    alert("works")
     setSelectHabit(null);
     navigation.navigate('addHabit');
   };
